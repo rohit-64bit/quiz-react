@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+
 import bgsignup from '../assets/bg/bgsignup.svg'
 function Signup() {
   return (
@@ -24,6 +25,8 @@ function Signup() {
               name="fullName"
               className='text-base font-medium px-7 h-14 rounded-3xl shadow-xl shadow-slate-200  border border-gray-200 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 outline-none transition-all duration-200 ease-in-out '
             />
+            
+
             <p className='text-xs ml-7 mt-2 text-slate-500'>E-mail ID</p>
 
             <input
