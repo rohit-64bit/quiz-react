@@ -1,10 +1,12 @@
 import React from 'react'
 import { Link, Routes } from "react-router-dom"
 import bglogin from '../assets/bg/bglogin.svg'
+import Header from "../components/Header"
+
 function Signin() {
     return (
         <>
-
+<Header/>
             <div className='flex'>
                 <div className='w-[65%]'>
                     <div className='p-16'>

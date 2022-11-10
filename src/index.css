@@ -3,4 +3,12 @@
 *{
     scroll-behavior: smooth;
 }
+*::-webkit-scrollbar {
+    width: 5px;
+  }
+  *::-webkit-scrollbar-thumb {
+    background-color: #adadad;
+    border-radius: 10px;
+    
+  }
 @tailwind utilities;

@@ -2,10 +2,12 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import Quiz from '../components/Quiz'
 import SideBar from '../components/SideBar'
+import Header from "../components/Header"
 
 function MyProfile() {
   return (
     <>
+    <Header/>
       <div className='flex'>
         <SideBar />
         <div className='p-10 overflow-y-auto h-[89.5vh] w-screen'>

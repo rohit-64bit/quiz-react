@@ -2,7 +2,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { IconButton, Input, InputAdornment } from '@mui/material';
 import React from 'react'
 import { useState } from 'react';
-
+import Header from "../components/Header"
 
 
 function EditProfile() {
@@ -41,6 +41,7 @@ function EditProfile() {
     
     return (
         <>
+        <Header />
             <div className='p-10 bg-slate-100 w-full h-full'>
                 <p className='font-medium text-2xl'>Edit Your Profile</p>
 

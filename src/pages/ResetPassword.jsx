@@ -1,10 +1,12 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 import bgrp from '../assets/bg/bgrp.svg'
+import Header from "../components/Header"
 
 function ResetPassword() {
   return (
     <>
+    <Header/>
             <div className='flex'>
                 <div className='w-[65%]'>
                     <div className='p-16'>

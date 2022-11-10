@@ -1,10 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import cmpImg from "../assets/images/undraw_online_test_re_kyfx.svg"
+import Header from "../components/Header"
+
 
 function Home() {
   return (
     <>
+    <Header/>
       <div className='bg-[url("/src/assets/bg/bghome.jpeg")] bg-cover bg-fixed bg-no-repeat h-max p-10'>
         <p className='text-center font-bold text-4xl mb-5'>Take Up A Quiz</p>
         <div className='w-96 border-t-4 border-blue-600 mx-auto my-8'></div>

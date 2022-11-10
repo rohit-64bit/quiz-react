@@ -1,11 +1,14 @@
 import React from 'react'
+import Header from "../components/Header"
 
 function AdminLogin() {
     // on auth success it will redirect to the admin UI
   return (
     <>
+    <Header/>
     <div className='w-screen'>
         <p className='font-bold text-xl text-center my-10 '>ADMIN LOGIN</p>
+        make it as the use4r auth page
         <form action="" className='flex flex-col w-[60%] mx-auto my-10 gap-5'>
             <input type="email" placeholder='email for admin' className='bg-slate-50 h-14 w-auto rounded-full shadow-lg border-2 font-medium px-10 text-lg' />
             <input type="password" placeholder='password' className='bg-slate-50 h-14 w-auto rounded-full shadow-lg border-2 font-medium px-10 text-lg' />

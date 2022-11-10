@@ -2,6 +2,8 @@ import React from 'react'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import Question from '../components/Question'
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import Header from "../components/Header"
+
 
 function Quizon() {
     function submitQuiz() {
@@ -12,6 +14,7 @@ function Quizon() {
     }
     return (
         <>
+        <Header/>
             <div className='p-10 flex flex-col gap-10'>
 
                 {/* timer the timer should be reseted once the question changes they can submit the quiz at any question */}

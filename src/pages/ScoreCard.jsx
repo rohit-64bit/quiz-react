@@ -1,9 +1,12 @@
 import { Link } from 'react-router-dom'
 import React from 'react'
+import Header from "../components/Header"
+
 
 function ScoreCard() {
   return (
     <>
+    <Header/>
       <div className='bg-[url("/src/assets/bg/bghome.jpeg")] bg-cover bg-fixed bg-no-repeat h-[89.3vh] p-20 flex flex-col justify-between'>
         <div className='mx-auto '>
           <p className='text-center font-medium'>Your Score</p>
