@@ -54,7 +54,7 @@ const CategoryState = (props) => {
         let newCategory = JSON.parse(JSON.stringify(category))
         // Logic to edit in client
         for (let index = 0; index < newCategory.length; index++) {
-            const element = newcategory[index];
+            const element = newCategory[index];
             if (element._id === id) {
                 newCategory[index].title = title;
                 newCategory[index].description = description;

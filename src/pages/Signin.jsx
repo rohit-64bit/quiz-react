@@ -10,6 +10,8 @@ function Signin() {
         password: ""
     })
 
+    // console.log(JSON.stringify(credentials));
+
     let navigate = useNavigate();
 
     const handleSignin = async (e) => {
@@ -19,7 +21,7 @@ function Signin() {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ email: credentials.email, password: credentials.password })
+            body: JSON.stringify(credentials)
         });
         const json = await response.json()
         // console.log(json);
@@ -29,6 +31,7 @@ function Signin() {
             navigate("/quizes")
         }
     }
+
     let onChange = (e) => {
         setCredentials({ ...credentials, [e.target.name]: e.target.value })
     }
