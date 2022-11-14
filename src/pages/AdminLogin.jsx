@@ -1,20 +1,87 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Header from "../components/Header"
+import bglogin from '../assets/bg/bglogin.svg'
+import { useNavigate } from "react-router-dom"
+
 
 function AdminLogin() {
-    // on auth success it will redirect to the admin UI
+  // on auth success it will redirect to the admin UI
+
+  let navigate = useNavigate();
+
+  const [credentials, setCredentials] = useState({
+    email: "",
+    password: ""
+  })
+
+
+  const handleLogin = async (e) => {
+    e.preventDefault()
+    const response = await fetch("http://localhost:1000/api/auth/admin/authadmin", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email: credentials.email, password: credentials.password })
+    });
+    
+    const json = await response.json();
+    if (json.authtoken != undefined) {
+
+      localStorage.setItem("adminToken", json.authtoken);
+      navigate("/admin/home");
+    }
+
+
+    console.log(json);
+
+  }
+  let onChange = (e) => {
+    setCredentials({ ...credentials, [e.target.name]: e.target.value })
+  }
+
   return (
     <>
-    <Header/>
-    <div className='w-screen'>
-        <p className='font-bold text-xl text-center my-10 '>ADMIN LOGIN</p>
-        make it as the use4r auth page
-        <form action="" className='flex flex-col w-[60%] mx-auto my-10 gap-5'>
-            <input type="email" placeholder='email for admin' className='bg-slate-50 h-14 w-auto rounded-full shadow-lg border-2 font-medium px-10 text-lg' />
-            <input type="password" placeholder='password' className='bg-slate-50 h-14 w-auto rounded-full shadow-lg border-2 font-medium px-10 text-lg' />
-            <button type='submit' className='bg-slate-700 text-lg font-bold text-white h-14 w-auto shadow-lg rounded-full hover:bg-slate-800 transition-all ease-in-out duration-700 '>LOGIN</button>
-        </form>
-    </div>
+      <Header />
+      <div className='flex'>
+        <div className='w-[65%]'>
+          <div className='p-16'>
+            <p className='text-4xl font-extralight text-slate-500'>ADMIN LOGIN</p>
+            <p className='mt-2 font-medium text-lg'>Welcome Back Admin</p>
+          </div>
+          <img src={bglogin} className='h-96 mx-auto' />
+        </div>
+        <div className='w-[35%]  p-20 flex flex-col bg-gradient-to-t from-slate-50 to-white'>
+
+
+          <p className='font-bold text-lg'>ADMIN LOGIN</p>
+          <form onSubmit={handleLogin} className='my-4 flex flex-col gap-3'>
+            <p className='text-xs ml-7 mt-2 text-slate-500'>E-mail ID</p>
+            <input
+              type="email"
+              name="email"
+              onChange={onChange}
+              value={credentials.email}
+              className='text-base font-medium px-7 h-14 rounded-3xl shadow-xl shadow-slate-200  border border-gray-200 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 outline-none transition-all duration-200 ease-in-out '
+            />
+
+            <p className='text-xs ml-7 mt-2 text-slate-500'>Password</p>
+            <input
+              type="password"
+              name="password"
+              onChange={onChange}
+              value={credentials.password}
+              className='text-base font-black px-7 h-14 rounded-3xl shadow-xl shadow-slate-200  border border-gray-200 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 outline-none transition-all duration-200 ease-in-out '
+            />
+
+            <div className='flex text-sm mt-1 text-slate-500 justify-between p-2'>
+              If You forgot the password please contact developer.
+            </div>
+            <button className='bg-blue-700 hover:bg-blue-800 transition-all ease-in-out duration-200 h-14 rounded-3xl text-center text-white font-medium hover:shadow-lg' type='submit'>Log In</button>
+          </form>
+
+        </div>
+      </div>
     </>
   )
 }

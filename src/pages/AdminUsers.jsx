@@ -1,9 +1,6 @@
-import { FunctionsOutlined } from '@mui/icons-material';
-import { Box, Button, Input, Modal } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import SidebarAdmin from '../components/SidebarAdmin'
 import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
 import BlockIcon from '@mui/icons-material/Block';
 import Header from "../components/Header"
 
@@ -12,9 +9,9 @@ function ManageUser(props) {
         <>
             <div className='flex w-full justify-between bg-slate-100 p-5 rounded-lg hover:shadow-lg transition-all ease-in-out duration-300 border-2 '>
                 <div className='flex gap-5 my-auto'>
-                    <p className='font-medium text-lg'>User Name</p>
-                    <p className='font-medium text-lg'>User Email</p>
-                    <p className='font-medium text-lg'>Total Quiz Attended</p>
+                    <p className='font-medium text-lg'>{props.name}</p>
+                    <p className='font-medium text-lg'>{props.email}</p>
+                    <p className='font-medium text-lg'>{props.contact}</p>
                 </div>
                 <div className='flex gap-5'>
 
@@ -29,9 +26,35 @@ function ManageUser(props) {
 
 function AdminUsers() {
 
+    const host = "http://localhost:1000"
+    const userFetched = []
+
+    const [user, setUser] = useState(userFetched)
+
+    // Get all user
+    const getUser = async () => {
+        // API Call 
+        const response = await fetch(`${host}/api/user/fetch`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                "auth-token": localStorage.getItem("adminToken")
+            }
+        });
+        const json = await response.json()
+        setUser(json)
+        console.log(json);
+    }
+    useEffect(() => {
+        getUser();
+    }, [])
+
+    
+          
+
     return (
         <>
-        <Header/>
+            <Header />
             <div className='flex'>
                 <SidebarAdmin />
                 <div className='p-10 h-[89.5vh] flex flex-col w-screen'>
@@ -39,19 +62,13 @@ function AdminUsers() {
                         <p className='mb-5 font-bold'>admin/manage/instructor</p>
                     </div>
                     <div className='h-[95%] flex flex-col gap-5 overflow-y-auto my-10 px-5'>
-                        <ManageUser />
-                        <ManageUser />
-                        <ManageUser />
-                        <ManageUser />
-                        <ManageUser />
-                        <ManageUser />
-                        <ManageUser />
-                        <ManageUser />
-                        <ManageUser />
-                        <ManageUser />
-                        <ManageUser />
-                        <ManageUser />
-                        
+
+                        {user.map((users) => {
+                            return (
+                                <ManageUser name={users.name} email={users.email} key={users._id} />
+                            )
+                        })}
+
                     </div>
                 </div>
             </div>

@@ -1,27 +1,88 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import SidebarAdmin from '../components/SidebarAdmin'
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { Button, Input } from '@mui/material';
+import { Button, Input, Modal } from '@mui/material';
 import Header from "../components/Header"
 import { Category } from '@mui/icons-material';
+import CategoryContext from '../context/category/categoryContext';
+import { useContext } from 'react';
+
+
 
 function CategoryView(props) {
+  const [data, setData] = useState({
+    name: "",
+    description: "",
+  })
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  let onChange = (e) => {
+    setData({ ...data, [e.target.name]: e.target.value })
+  }
+
   return (
     <>
       <div className='w-full flex justify-between p-5 rounded-lg bg-white'>
         <p className=' my-auto font-medium'>{props.name}</p>
         <p className=' my-auto font-light'>{props.description}</p>
-        <div className='flex gap-5'>
-          <button className='bg-green-300 rounded-lg p-1 hover:bg-green-400 transition-all ease-in-out duration-500'><EditIcon /></button>
-          <button className='bg-red-400 rounded-lg p-1 hover:bg-red-500 transition-all ease-in-out duration-500'><DeleteIcon /></button>
+        <div className='flex gap-5 text-white'>
+          <button className='bg-green-600 rounded-lg p-1 hover:bg-green-700 transition-all ease-in-out duration-500' onClick={handleOpen}><EditIcon /></button>
+          <button className='bg-red-600 rounded-lg p-1 hover:bg-red-700 transition-all ease-in-out duration-500'><DeleteIcon /></button>
         </div>
       </div>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        className="flex"
+      >
+        <div className='m-auto bg-white rounded-2xl w-[50%] shadow-slate-700 shadow-lg'>
+          <form method='' className='flex my-auto rounded-2xl flex-col gap-10 p-10 '>
+            <Input onChange={onChange} placeholder='Edit Name' name='ename' type='text'></Input>
+            <Input onChange={onChange} placeholder='Edit Description' name='edescription' type='text'></Input>
+            <button className='w-full h-12 bg-blue-600 hover:bg-blue-700 font-medium text-white transition-all ease-in-out duration-500 rounded-lg ' type='submit'>SAVE CATEGORY</button>
+          </form>
+        </div>
+      </Modal>
     </>
   )
 }
 
 function AdminMain() {
+  const [data, setData] = useState({
+    name: "",
+    description: "",
+  })
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const response = await fetch("http://localhost:1000/api/category/create", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ name: data.name, description: data.description })
+    });
+    const json = await response.json()
+  }
+  let onChange = (e) => {
+    setData({ ...data, [e.target.name]: e.target.value })
+  }
+
+  const context = useContext(CategoryContext)
+  const { category, setCategory, editCategory, getCategory, deleteCategory } = context;
+
+  useEffect(() => {
+    getCategory("adminToken");
+  }, [])
+
+
+
+
   return (
     <>
       <Header details="MANAGE CATEGORY" />
@@ -33,25 +94,25 @@ function AdminMain() {
             <div className='bg-slate-100 h-[70.5vh] w-[42rem] rounded-lg shadow-lg p-5  '>
               <p className='text-lg font-bold mb-2 '>Edit Category</p>
               <div className='h-[57vh] flex flex-col gap-3 overflow-y-auto px-3'>
-                <CategoryView name="Space X" description="If you know about universe then you will enjoy it." />
-                <CategoryView name="Space X" description="If you know about universe then you will enjoy it." />
-                <CategoryView name="Space X" description="If you know about universe then you will enjoy it." />
-                <CategoryView name="Space X" description="If you know about universe then you will enjoy it." />
-                <CategoryView name="Space X" description="If you know about universe then you will enjoy it." />
-                <CategoryView name="Space X" description="If you know about universe then you will enjoy it." />
-                <CategoryView name="Space X" description="If you know about universe then you will enjoy it." />
-                <CategoryView name="Space X" description="If you know about universe then you will enjoy it." />
-                <CategoryView name="Space X" description="If you know about universe then you will enjoy it." />
+
+                {category.map((categories) => {
+                  return (
+                    <CategoryView name={categories.name} description={categories.description} key={categories._id} />
+                  )
+                })}
+
+
+
               </div>
             </div>
 
 
             <div className='bg-slate-100 h-[70.5vh] w-[42rem] rounded-lg shadow-lg p-5  '>
-              <p className='text-lg font-bold'>Add/Edit Category</p>
-              <form action="" className='flex flex-col gap-10 p-10 '>
-                <Input placeholder='Category Name' name='categoryName' type='text'></Input>
-                <Input placeholder='Category Description' name='categoryDescription' type='text'></Input>
-                <button className='w-full h-12 bg-blue-600 hover:bg-blue-700 font-medium text-white transition-all ease-in-out duration-500 rounded-lg '>ADD / EDIT  CATEGORY</button>
+              <p className='text-lg font-bold'>Add Category</p>
+              <form method='' onSubmit={handleSubmit} className='flex flex-col gap-10 p-10 '>
+                <Input onChange={onChange} placeholder='Category Name' name='name' type='text'></Input>
+                <Input onChange={onChange} placeholder='Category Description' name='description' type='text'></Input>
+                <button className='w-full h-12 bg-blue-600 hover:bg-blue-700 font-medium text-white transition-all ease-in-out duration-500 rounded-lg ' type='submit'>ADD CATEGORY</button>
               </form>
             </div>
           </div>

@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import Header from '../components/Header'
 import Quiz from '../components/Quiz'
 import SidebarInstructor from '../components/SidebarInstructor'
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { Link } from 'react-router-dom';
+import CategoryContext from '../context/category/categoryContext';
 
 function CategoryComponent(props) {
   return (
@@ -22,8 +23,15 @@ function CategoryComponent(props) {
   )
 }
 
-
 function InstructorQuiz() {
+  // getting all categories
+  const context = useContext(CategoryContext)
+  const { category, getCategory } = context;
+
+  useEffect(() => {
+    getCategory("instructorToken");
+  }, [])
+
   return (
 
     <>
@@ -31,19 +39,9 @@ function InstructorQuiz() {
       <div className='flex'>
         <SidebarInstructor />
         <div className='p-10 overflow-y-auto grid grid-cols-1 gap-8 h-[89.5vh] w-screen'>
-          <CategoryComponent name="Science" description="If you are interested in science you will love it to take the quiz." />
-          <CategoryComponent />
-          <CategoryComponent />
-          <CategoryComponent />
-          <CategoryComponent />
-          <CategoryComponent />
-          <CategoryComponent />
-          <CategoryComponent />
-          <CategoryComponent />
-          <CategoryComponent />
-          <CategoryComponent />
-        </div>
 
+
+        </div>
       </div>
     </>
 
