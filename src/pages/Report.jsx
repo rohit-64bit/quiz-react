@@ -1,10 +1,11 @@
-import { Button, Menu, MenuItem } from '@mui/material'
+import { Accordion, AccordionDetails, AccordionSummary, Button, Menu, MenuItem, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import Quiz from '../components/Quiz'
 import SideBar from '../components/SideBar'
 import Fade from '@mui/material/Fade';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import Header from "../components/Header"
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 
 function Report() {
@@ -25,9 +26,24 @@ function Report() {
             <Header details="YOUR REPORT" />
             <div className="flex">
                 <SideBar />
-                <div className='p-10 grid grid-cols-5 gap-5 overflow-y-auto h-[89.5vh] w-screen'>
+                <div className='p-10 overflow-y-auto h-[89.5vh] w-screen'>
+
+                    <Accordion className='bg-slate-100 text-lg'>
+                        <AccordionSummary
+                            expandIcon={<ExpandMoreIcon />}
+                            aria-controls="panel1a-content"
+                            id="panel1a-header"
+                        >
+                            <Typography>Accordion 1</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails >
+                            <div >
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+                                malesuada lacus ex, sit amet blandit leo lobortis eget.
+                            </div>
+                        </AccordionDetails>
+                    </Accordion>
                     
-                    <Quiz topic="Science" description="Hello this is the category science quiz" theme="yellow" />
                 </div>
             </div>
         </>

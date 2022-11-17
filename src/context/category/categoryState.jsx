@@ -47,7 +47,7 @@ const CategoryState = (props) => {
                 'Content-Type': 'application/json',
                 "auth-token": localStorage.getItem("adminToken")
             },
-            body: JSON.stringify({ title, description})
+            body: JSON.stringify({ title, description })
         });
         const json = await response.json();
 
@@ -64,9 +64,56 @@ const CategoryState = (props) => {
         setCategory(newCategory);
     }
 
+    // get user details
+    const userFetched = {}
+    const [user, setUser] = useState(userFetched)
+
+    const getUserProfile = async (token) => {
+        // API Call 
+        const response = await fetch(`${host}/api/auth/user/getuser`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                "auth-token": localStorage.getItem(token)
+            }
+        });
+        const json = await response.json()
+        setUser(json)
+    }
+
+    // instructor fetched
+    const instructorFetched = {}
+    const [instructor, setInstructor] = useState(instructorFetched)
+    const getInstructorProfile = async (token) => {
+        // api call
+        const response = await fetch(`${host}/api/auth/instructor/getinstructor`, {
+            method: 'POST',
+            header: {
+                'Content-Type': 'application/json',
+                "auth-token": localStorage.getItem(token)
+            }
+        })
+        const json = await response.json()
+        setInstructor(json)
+    }
+
+    // getting Videos details
+    const videoFetched = []
+    const [videos, setVideos] = useState(videoFetched)
+    const getVideoDetails = async (token) => {
+        const response = await fetch(`${host}/api/video/fetch`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                "auth-token": localStorage.getItem(token)
+            }
+        });
+        const json = await response.json();
+        setVideos(json);
+    }
 
     return (
-        <CategoryContext.Provider value={{ category, setCategory, editCategory , getCategory, deleteCategory }}>
+        <CategoryContext.Provider value={{ category, setCategory, editCategory, getCategory, deleteCategory, getUserProfile, user, videos, getVideoDetails, instructor, getInstructorProfile }}>
             {props.children}
         </CategoryContext.Provider>
     )

@@ -36,6 +36,8 @@ import AdminPRoutes from './PrivateRoute/AdminPRoutes'
 import InstructorLogin from './pages/InstructorLogin'
 import InstructorPRoutes from './PrivateRoute/InstructorPRoutes'
 import CategoryState from './context/category/categoryState'
+import WatchVideo from './pages/WatchVideo'
+import Level from './pages/Level'
 
 
 
@@ -64,6 +66,11 @@ function App() {
               <Quizes />
             </UserPRoute>
           }></Route>
+          <Route path='/level' element={
+            <UserPRoute>
+              <Level />
+            </UserPRoute>
+          }></Route>
           <Route path='/quiz' element={
             <UserPRoute>
               <Quizpage />
@@ -86,6 +93,10 @@ function App() {
           }></Route>
           <Route path='/learn' element={<UserPRoute>
             <Learn />
+          </UserPRoute>
+          }></Route>
+          <Route path='/watchvideo' element={<UserPRoute>
+            <WatchVideo />
           </UserPRoute>
           }></Route>
           <Route path='/report' element={<UserPRoute>

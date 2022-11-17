@@ -16,6 +16,7 @@ function Signin() {
 
     const handleSignin = async (e) => {
         e.preventDefault();
+        console.log(credentials);
         const response = await fetch("http://localhost:1000/api/auth/user/authuser", {
             method: 'POST',
             headers: {

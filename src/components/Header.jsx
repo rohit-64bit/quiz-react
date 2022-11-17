@@ -1,12 +1,12 @@
 import { Avatar } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
 import Logout from '@mui/icons-material/Logout';
-
+import CategoryContext from '../context/category/categoryContext';
 
 
 function Header(props) {
@@ -16,13 +16,23 @@ function Header(props) {
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
+
+
+    // getting user details
+
+    const context = useContext(CategoryContext)
+    const { getUserProfile, user } = context;
+    useEffect(() => {
+        getUserProfile("userToken")
+    }, [])
+
+
     const handleClose = () => {
         setAnchorEl(null);
     };
 
     const handleLogout = () => {
         localStorage.removeItem("userToken");
-        sessionStorage.removeItem("adminToken");
         navigate({ pathname: "/signin" });
     }
 
@@ -45,7 +55,7 @@ function Header(props) {
                             </Link>
                         </div>
                         :
-                        <Avatar onClick={handleClick} sx={{ width: 36, height: 36, padding: 0 }}>M</Avatar>
+                        <Avatar onClick={handleClick} sx={{ width: 36, height: 36, padding: 0 }}></Avatar>
                     }
 
 

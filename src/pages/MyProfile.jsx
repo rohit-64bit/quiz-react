@@ -1,10 +1,18 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Quiz from '../components/Quiz'
 import SideBar from '../components/SideBar'
 import Header from "../components/Header"
+import CategoryContext from '../context/category/categoryContext'
 
 function MyProfile() {
+      // getting user details
+
+      const context = useContext(CategoryContext)
+      const { getUserProfile, user } = context;
+      useEffect(() => {
+          getUserProfile("userToken")
+      }, [])
   return (
     <>
     <Header/>
@@ -14,8 +22,8 @@ function MyProfile() {
           <p className='font-medium text-2xl'>MY PROFILE</p>
           <div className='bg-[url("/src/assets/bg/profilebg.jpg")] bg-cover bg-no-repeat flex flex-col justify-between h-[48%] my-10 border-2 shadow-lg rounded-3xl p-7'>
             <div>
-              <div className='font-medium text-xl'>Quiz taker Name</div>
-              <div className='font-light text-sm'>quiztaker@gmail.com</div>
+              <div className='font-medium text-xl'>{user.name}</div>
+              <div className='font-light text-sm'>{user.email}</div>
             </div>
             <div className='flex justify-between w-[20%] '>
               <div className='flex flex-col'>
