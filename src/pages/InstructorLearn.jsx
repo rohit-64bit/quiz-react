@@ -7,35 +7,85 @@ import { Input, MenuItem, TextField } from '@mui/material';
 import CategoryContext from '../context/category/categoryContext';
 
 
+function Video(props) {
+  const context = useContext(CategoryContext)
+  const { setVideos, videos, } = context;
+
+  const deleteVideo = async (id) => {
+    // API Call
+    const response = await fetch(`http://localhost:1000/api/video/delete/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        "auth-token": localStorage.getItem("AuthInstructor")
+      }
+    });
+    const json = response.json();
+    const newVideo = videos.filter((videos) => { return videos._id !== id })
+    setVideos(newVideo)
+  }
+
+
+  function handleDelete() {
+    deleteVideo(props.id)
+    window.location.reload();
+  }
+
+
+  return (
+    <div className='bg-white h-max w-64 rounded-lg hover:shadow-lg transition-all ease-in-out duration-300 flex flex-col border-2'>
+      <img src={props.imageLink} alt="" className='rounded-t-lg' />
+      <div className='flex flex-col px-5 py-2'>
+
+        <div className='text-xl font-bold'>{props.title}</div>
+        <div className='font-medium'>{props.description}</div>
+      </div>
+      <div className='flex justify-around p-5 '>
+        <button onClick={handleDelete} className='p-1 transition-all ease-in-out duration-300 px-3 bg-red-600 hover:bg-red-700 text-white rounded-lg my-auto'><DeleteIcon /> Delete</button>
+      </div>
+    </div>
+  )
+}
+
+
+
 function InstructorLearn() {
 
-  const [data, setData] = useState('');
+
 
   const context = useContext(CategoryContext)
-  const { category, getCategory, videos, getVideoDetails } = context;
+  const { category, getCategory, setVideos, videos, getVideoDetails, getInstructorProfile, instructor } = context;
+
+  console.log(instructor);
+
 
   useEffect(() => {
-    getCategory("instructorToken");
-    getVideoDetails("instructorToken");
-  }, [])
+    getVideoDetails(instructor.categoryAssinged, "AuthInstructor");
+    getInstructorProfile("AuthInstructor")
+  }, [instructor.categoryAssinged])
 
+  const [link, setLink] = useState('');
 
+  const data = {
+    url: link.url,
+    categoryID: instructor.categoryAssinged
+  }
 
+  console.log(data);
 
   const handleAdd = async (e) => {
-    e.preventDefault();
     const response = await fetch("http://localhost:1000/api/video/create", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'auth-token': localStorage.getItem('instructorToken')
+        'auth-token': localStorage.getItem('AuthInstructor')
       },
       body: JSON.stringify(data)
     });
   }
 
   let onChange = (e) => {
-    setData({ ...data, [e.target.name]: e.target.value })
+    setLink({ ...data, [e.target.name]: e.target.value })
   }
 
 
@@ -52,19 +102,7 @@ function InstructorLearn() {
 
             {videos.map((options) => {
               return (
-                <div key={options._id} className='bg-white h-max w-64 rounded-lg hover:shadow-lg transition-all ease-in-out duration-300 flex flex-col border-2'>
-                  <img src={options.imageLink} alt="" />
-                  <div className='flex flex-col px-5 py-2'>
-
-                    <div className='text-xl font-bold'>{options.title}</div>
-                    <div className='font-medium'>{options.description}</div>
-                  </div>
-                  <div className='flex justify-around p-5 '>
-
-                    <button className='p-1 transition-all ease-in-out duration-300 bg-green-600 hover:bg-green-700 text-white rounded-lg my-auto'><EditIcon /></button>
-                    <button className='p-1 transition-all ease-in-out duration-300 bg-red-600 hover:bg-red-700 text-white rounded-lg my-auto'><DeleteIcon /></button>
-                  </div>
-                </div>
+                <Video id={options._id} key={options._id} title={options.title} description={options.description} imageLink={options.imageLink} />
               )
             })}
 

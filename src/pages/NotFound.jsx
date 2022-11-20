@@ -12,7 +12,6 @@ function NotFound() {
         <img src={error} alt="404" className='mx-auto w-[40%] ' />
         <Link to="/" className='mx-auto px-5 py-3 bg-blue-600 text-white font-medium text-lg rounded-lg hover:bg-blue-700 transition-all ease-in-out duration-500 hover:translate-y-1'>RETURN TO HOME</Link>
         </div>
-        
         </>
     )
 }

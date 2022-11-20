@@ -16,7 +16,7 @@ function Signin() {
 
     const handleSignin = async (e) => {
         e.preventDefault();
-        console.log(credentials);
+        // console.log(credentials);
         const response = await fetch("http://localhost:1000/api/auth/user/authuser", {
             method: 'POST',
             headers: {
@@ -72,7 +72,7 @@ function Signin() {
                             className='text-base font-black px-7 h-14 rounded-3xl shadow-xl shadow-slate-200  border border-gray-200 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 outline-none transition-all duration-200 ease-in-out '
                         />
 
-                        <div className='flex text-sm mt-1 text-slate-500 justify-between p-2'>
+                        {/* <div className='flex text-sm mt-1 text-slate-500 justify-between p-2'>
                             <div className='flex'>
                                 <input type="checkbox"
                                     name=""
@@ -80,7 +80,7 @@ function Signin() {
                                 Show Password
                             </div>
                             <Link to='/reset-password' className='hover:underline'>Forgotten Password ?</Link>
-                        </div>
+                        </div> */}
                         <button className='bg-blue-700 hover:bg-blue-800 transition-all ease-in-out duration-200 h-14 rounded-3xl text-center text-white font-medium hover:shadow-lg' type='submit'>Sign In</button>
                     </form>
 

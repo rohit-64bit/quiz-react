@@ -16,24 +16,13 @@ function SidebarInstructor() {
 
     const logoutManagers = () => {
         window.location.reload(true);
-        localStorage.removeItem("instructorToken")
+        localStorage.removeItem("AuthInstructor")
     }
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    // const context = useContext(CategoryContext)
-    // const { instructor, getInstructorProfile } = context;
-
-    // console.log(instructor);
-
-    // useEffect(() => {
-    //     console.log(
-
-    //         getInstructorProfile("instructorToken")
-    //     );
-    // }, [])
 
     return (
         <>
@@ -46,7 +35,7 @@ function SidebarInstructor() {
                     className='flex'
                 >
                     <div className='bg-white rounded-lg shadow-lg shadow-slate-700 flex flex-col justify-around h-40 w-64 m-auto p-5'>
-                        <p className='font-bold text-lg'>Hey! Instructor</p>
+                        <p className='font-bold text-lg'>Hey! </p>
                         <p className='font-medium text-sm'>Confirm Logout</p>
                         <div className='flex justify-between'>
                             <button className='px-2 py-1 w-24 text-white font-medium rounded transition-all ease-in-out duration-300 bg-blue-700 hover:bg-blue-800' onClick={logoutManagers}>LOGOUT</button>

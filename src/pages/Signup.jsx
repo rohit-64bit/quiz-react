@@ -29,8 +29,8 @@ function Signup() {
     // console.log(json);
     if (json.success) {
       // saving the auth token and redirect
-      localStorage.setItem("userToken", json.authtoken)
-      navigate({ pathname: "/quizes" }, { replace: true })
+      // localStorage.setItem("userToken", json.authtoken)
+      navigate({ pathname: "/signin" }, { replace: true })
     }
   }
   let onChange = (e) => {
@@ -97,12 +97,12 @@ function Signup() {
               onChange={onChange}
               className='text-base font-black px-7 h-14 rounded-3xl shadow-xl shadow-slate-200  border border-gray-200 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 outline-none transition-all duration-200 ease-in-out '
             />
-            <div className='flex text-sm mt-1 text-slate-500'>
+            {/* <div className='flex text-sm mt-1 text-slate-500'>
               <input type="checkbox"
                 name=""
                 className='mr-2 h-5 w-5 rounded-full focus:border-blue-500 focus:bg-white  outline-none transition-all duration-200 ease-in-out ' />
               Show Password
-            </div>
+            </div> */}
             <button className='bg-blue-700 hover:bg-blue-800 transition-all ease-in-out duration-200 h-14 rounded-3xl text-center text-white font-medium hover:shadow-lg' type='submit'>Sign Up</button>
           </form>
         </div>

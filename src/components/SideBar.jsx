@@ -61,12 +61,12 @@ function SideBar() {
                     <p className='text-center mx-auto text-sm'>Report</p>
 
                 </NavLink>
-                <NavLink className={({ isActive }) => (isActive ? 'text-blue-700 flex flex-col border-2 h-20 w-20 py-3 rounded-md  transition-all ease-in-out shadow-lg font-medium bg-white' : 'text-slate-400 flex flex-col border-2 h-20 w-20 py-3 rounded-md  transition-all ease-in-out font-medium bg-white hover:text-blue-700')} to="/myprofile">
+                {/* <NavLink className={({ isActive }) => (isActive ? 'text-blue-700 flex flex-col border-2 h-20 w-20 py-3 rounded-md  transition-all ease-in-out shadow-lg font-medium bg-white' : 'text-slate-400 flex flex-col border-2 h-20 w-20 py-3 rounded-md  transition-all ease-in-out font-medium bg-white hover:text-blue-700')} to="/myprofile">
 
                     <PersonIcon className='mx-auto' />
                     <p className='text-center mx-auto text-sm'>My Profile</p>
 
-                </NavLink>
+                </NavLink> */}
 
             </div>
 

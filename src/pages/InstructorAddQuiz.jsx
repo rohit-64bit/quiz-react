@@ -1,44 +1,54 @@
 import { Input } from '@mui/material'
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
 import SidebarInstructor from '../components/SidebarInstructor'
+import CategoryContext from '../context/category/categoryContext'
 
 
 
 function InstructorAddQuiz() {
-    // calculating question numbers on the frontend
+    const navigate = useNavigate();
+    // calling functions from context
+    const context = useContext(CategoryContext)
+    const { categoryData, getCategoryDetails } = context;
+    const location = useLocation();
+    const { category, level, name, levelID } = location.state;
+
+    const [detailsFormat, setDetailsFormat] = useState([])
+
+    // calling the get category details function
+    useEffect(() => {
+        getCategoryDetails(category, "AuthInstructor")
+    }, [])
+
+
+
     let [questionNo, setQuestionNo] = useState([])
 
-    const onAddBtnClick = async (e) => {
-        e.preventDefault();
-        setDetails(input)
-        setQuestionNo(questionNo.concat(""));
-        setQuestions(questions.concat(details))
-    };
+    let [questions, setQuestions] = useState([])
+
 
 
     // defining input for the users
     const [input, setInput] = useState({
         questionInput: "",
         option1: "",
-        option1C: undefined,
+        option1C: "",
         option2: "",
-        option2C: undefined,
+        option2C: "",
         option3: "",
-        option3C: undefined,
+        option3C: "",
         option4: "",
-        option4C: undefined
+        option4C: ""
     })
 
     // object of input
-    let onChangeInput = (e) => {
-        setInput({ ...input, [e.target.name]: e.target.value })
-    }
 
 
 
-    let [details, setDetails] = useState([{
+    let details = {
 
         questionText: input.questionInput,
         answerOptions: [
@@ -59,47 +69,53 @@ function InstructorAddQuiz() {
                 isCorrect: input.option4C
             }
         ]
-    }])
+    }
 
 
+    let data = {
+        categoryName: name,
+        category: category,
+        levelName: level,
+        level: levelID,
+        questions: questions
+    }
 
-    // quiz adding to hooks
+    let onChangeInput = (e) => {
+        setInput({ ...input, [e.target.name]: e.target.value })
+    }
+
+    const onAddBtnClick = async (e) => {
+        e.preventDefault();
+        setDetailsFormat(details)
+        setQuestionNo(questionNo.concat(""));
+        setQuestions(questions.concat(details))
+        console.log(details);
+    };
+
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        console.log(data);
+        const response = await fetch("http://localhost:1000/api/quiz/create", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': localStorage.getItem('AuthInstructor')
+            },
+            body: JSON.stringify(data)
+        });
+        const json = await response.json()
+        navigate('/instructor/home')
+        window.alert("Quiz Added Succesfully")
+    }
+
+
+    // prevent relaod
     const handleForm = (e) => {
         e.preventDefault();
     }
 
 
-
-
-    // this holds array of all the questions
-    let [questions, setQuestions] = useState([])
-
-
-
-    // this holds all the data to be sent to the backend
-    let data = {
-        name: "hello world",
-        category: "compouter",
-        level: "easy",
-        questions: questions
-    }
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        const response = await fetch("http://localhost:1000/api/quiz/create", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'auth-token': localStorage.getItem('instructorToken')
-            },
-            body: JSON.stringify(data)
-        });
-    }
-
-
-
-
-    // This block will be used to send data to the backend
 
 
 
@@ -113,15 +129,15 @@ function InstructorAddQuiz() {
                         <div className="flex gap-10">
                             <div>
                                 <p className='text-slate-500 font-medium text-xs'>Quiz Category</p>
-                                <div className='font-medium'>Science</div>
+                                <div className='font-medium'>{categoryData.name}</div>
                             </div>
                             <div>
                                 <p className='text-slate-500 font-medium text-xs'>Quiz Description</p>
-                                <div className='font-medium'>Science</div>
+                                <div className='font-medium'>{categoryData.description}</div>
                             </div>
                             <div>
                                 <p className='text-slate-500 font-medium text-xs'>Level</p>
-                                <div className='font-medium'>Easy</div>
+                                <div className='font-medium'>{level}</div>
                             </div>
                             <div>
                                 <p className='text-slate-500 font-medium text-xs'>Total Questions added (minimum 5 questions)</p>
@@ -149,22 +165,26 @@ function InstructorAddQuiz() {
                                 <div className='flex gap-5'>
                                     <div className='my-auto mx-5 font-bold text-lg'>A</div>
                                     <input name='option1' type="text" placeholder='Type Options' className='text-base font-medium px-7 h-14 w-[95%] rounded-lg shadow-xl shadow-slate-200  border border-gray-200 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 outline-none transition-all duration-200 ease-in-out ' value={input.option1} onChange={onChangeInput} />
-                                    <input type="text" value={input.option1C} onChange={onChangeInput} className='text-base font-medium px-1 h-14 w-[5%] rounded-lg shadow-xl shadow-slate-200  border border-gray-200 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 outline-none transition-all duration-200 ease-in-out ' />
+                                    <input type="text" name='option1C' value={input.option1C} onChange={onChangeInput} className='text-base font-medium px-1 h-14 w-[5%] rounded-lg shadow-xl shadow-slate-200  border border-gray-200 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 outline-none transition-all duration-200 ease-in-out ' />
+
                                 </div>
                                 <div className='flex gap-5'>
+
                                     <div className='my-auto mx-5 font-bold text-lg'>B</div>
                                     <input name='option2' type="text" placeholder='Type Options' className='text-base font-medium px-7 h-14 w-[95%] rounded-lg shadow-xl shadow-slate-200  border border-gray-200 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 outline-none transition-all duration-200 ease-in-out ' value={input.option2} onChange={onChangeInput} />
-                                    <input type="text" value={input.option2C} onChange={onChangeInput} className='text-base font-medium px-1 h-14 w-[5%] rounded-lg shadow-xl shadow-slate-200  border border-gray-200 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 outline-none transition-all duration-200 ease-in-out ' />
+
+                                    <input type="text" name='option2C' value={input.option2C} onChange={onChangeInput} className='text-base font-medium px-1 h-14 w-[5%] rounded-lg shadow-xl shadow-slate-200  border border-gray-200 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 outline-none transition-all duration-200 ease-in-out ' />
+
                                 </div>
                                 <div className='flex gap-5'>
                                     <div className='my-auto mx-5 font-bold text-lg'>C</div>
                                     <input name='option3' type="text" placeholder='Type Options' className='text-base font-medium px-7 h-14 w-[95%] rounded-lg shadow-xl shadow-slate-200  border border-gray-200 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 outline-none transition-all duration-200 ease-in-out ' value={input.option3} onChange={onChangeInput} />
-                                    <input type="text" value={input.option3C} onChange={onChangeInput} className='text-base font-medium px-1 h-14 w-[5%] rounded-lg shadow-xl shadow-slate-200  border border-gray-200 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 outline-none transition-all duration-200 ease-in-out ' />
+                                    <input type="text" name='option3C' value={input.option3C} onChange={onChangeInput} className='text-base font-medium px-1 h-14 w-[5%] rounded-lg shadow-xl shadow-slate-200  border border-gray-200 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 outline-none transition-all duration-200 ease-in-out ' />
                                 </div>
                                 <div className='flex gap-5'>
                                     <div className='my-auto mx-5 font-bold text-lg'>D</div>
                                     <input name='option4' type="text" placeholder='Type Options' className='text-base font-medium px-7 h-14 w-[95%] rounded-lg shadow-xl shadow-slate-200  border border-gray-200 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 outline-none transition-all duration-200 ease-in-out ' value={input.option4} onChange={onChangeInput} />
-                                    <input type="text" value={input.option4C} onChange={onChangeInput} className='text-base font-medium px-1 h-14 w-[5%] rounded-lg shadow-xl shadow-slate-200  border border-gray-200 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 outline-none transition-all duration-200 ease-in-out ' />
+                                    <input type="text" name='option4C' value={input.option4C} onChange={onChangeInput} className='text-base font-medium px-1 h-14 w-[5%] rounded-lg shadow-xl shadow-slate-200  border border-gray-200 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 outline-none transition-all duration-200 ease-in-out ' />
                                 </div>
                             </span>
                         </div>

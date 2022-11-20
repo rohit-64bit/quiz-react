@@ -1,14 +1,26 @@
 import { Link, useLocation } from 'react-router-dom'
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import Header from "../components/Header"
+import CategoryContext from '../context/category/categoryContext';
 
 
 function ScoreCard(props) {
 
   const location = useLocation();
-  const { finalScore, correctAns,totalQuestion } = location.state;
-  console.log(finalScore)
-  console.log(correctAns);
+
+  const { finalScore, correctAns, quizCategory, quizLevel, totalQuestion, category, level } = location.state;
+
+  const context = useContext(CategoryContext)
+  const { getUserProfile, user } = context;
+  useEffect(() => {
+    getUserProfile("userToken")
+  }, [])
+
+  console.log(user);
+  console.log(location.state);
+
+  
+
 
   return (
     <>

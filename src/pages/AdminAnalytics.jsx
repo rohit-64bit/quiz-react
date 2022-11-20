@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
-import SidebarInstructor from '../components/SidebarInstructor'
+import SidebarAdmin from '../components/SidebarAdmin'
 
 function UserReport(props) {
     return (
         <>
             <div className='flex w-full h-max justify-between bg-slate-100 p-5 rounded-lg hover:shadow-lg hover:bg-slate-800 hover:text-white transition-all ease-in-out duration-300 border-2 '>
                 <div className="flex gap-10 my-auto">
-                <div>
+                    <div>
                         <p className='text-slate-500 font-medium text-xs'>User Name</p>
                         <div className='font-medium'>{props.userName}</div>
                     </div>
@@ -41,7 +41,7 @@ function UserReport(props) {
     )
 }
 
-function InstructorReport() {
+function AdminAnalytics() {
 
     const reportFetched = []
     const [report, setReport] = useState(reportFetched)
@@ -50,7 +50,7 @@ function InstructorReport() {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                "auth-token": localStorage.getItem("AuthInstructor")
+                "auth-token": localStorage.getItem("adminToken")
             }
         });
         const json = await response.json();
@@ -59,15 +59,14 @@ function InstructorReport() {
     }
 
     useEffect(() => {
-      getUserReport()
+        getUserReport()
     }, [])
-    
 
     return (
         <>
             <Header details="USER REPORTS" />
             <div className='flex'>
-                <SidebarInstructor />
+                <SidebarAdmin />
                 <div className='p-10 overflow-y-auto flex flex-col gap-8 h-[89.5vh] w-screen'>
 
                     {report.map((data) => {
@@ -84,4 +83,4 @@ function InstructorReport() {
     )
 }
 
-export default InstructorReport
+export default AdminAnalytics

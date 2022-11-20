@@ -28,7 +28,7 @@ function InstructorLogin() {
         });
         const json = await response.json();
         if (json.authtoken != undefined) {
-            localStorage.setItem("instructorToken", json.authtoken);
+            localStorage.setItem("AuthInstructor", json.authtoken);
             navigate("/instructor/home");
         }
 

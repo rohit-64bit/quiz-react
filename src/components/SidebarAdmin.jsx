@@ -47,12 +47,6 @@ function SidebarAdmin() {
                         <p className='text-center m-auto text-sm'>Manage Category</p>
 
                     </NavLink>
-                    <NavLink className={({ isActive }) => (isActive ? 'text-blue-700 flex flex-col border-2 h-20 w-20 py-1 rounded-md  transition-all ease-in-out shadow-lg font-medium bg-white' : 'text-slate-400 flex flex-col border-2 h-20 w-20 py-1 rounded-md  transition-all ease-in-out font-medium bg-white hover:text-blue-700')} to="/admin/manage/quiz">
-
-                        <PsychologyAltIcon className='m-auto' />
-                        <p className='text-center m-auto text-sm'>Manage Quiz</p>
-
-                    </NavLink>
                     <NavLink className={({ isActive }) => (isActive ? 'text-blue-700 flex flex-col border-2 h-20 w-20 py-1 rounded-md  transition-all ease-in-out shadow-lg font-medium bg-white' : 'text-slate-400 flex flex-col border-2 h-20 w-20 py-1 rounded-md  transition-all ease-in-out font-medium bg-white hover:text-blue-700')} to="/admin/manage/instructors">
 
                         <ManageAccountsIcon className='m-auto' />
@@ -68,7 +62,7 @@ function SidebarAdmin() {
                     <NavLink className={({ isActive }) => (isActive ? 'text-blue-700 flex flex-col border-2 h-20 w-20 py-1 rounded-md  transition-all ease-in-out shadow-lg font-medium bg-white' : 'text-slate-400 flex flex-col border-2 h-20 w-20 py-1 rounded-md  transition-all ease-in-out font-medium bg-white hover:text-blue-700')} to="/admin/analytics">
 
                         <AssessmentIcon className='m-auto' />
-                        <p className='text-center m-auto text-sm'>Ueser Analytics</p>
+                        <p className='text-center m-auto text-sm'>User Analytics</p>
 
                     </NavLink>
 

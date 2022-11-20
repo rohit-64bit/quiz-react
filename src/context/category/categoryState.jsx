@@ -4,6 +4,9 @@ import CategoryContext from './categoryContext'
 
 const CategoryState = (props) => {
     const host = "http://localhost:1000"
+
+    // multiple category fetched
+
     const categoryFetched = []
 
     const [category, setCategory] = useState(categoryFetched)
@@ -34,39 +37,15 @@ const CategoryState = (props) => {
             }
         });
         const json = response.json();
-        const newCategory = category.filter((note) => { return note._id !== id })
+        const newCategory = category.filter((category) => { return category._id !== id })
         setCategory(newCategory)
     }
 
-    // Edit a Note
-    const editCategory = async (id, title, description) => {
-        // API Call 
-        const response = await fetch(`${host}/api/category/update/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                "auth-token": localStorage.getItem("adminToken")
-            },
-            body: JSON.stringify({ title, description })
-        });
-        const json = await response.json();
-
-        let newCategory = JSON.parse(JSON.stringify(category))
-        // Logic to edit in client
-        for (let index = 0; index < newCategory.length; index++) {
-            const element = newCategory[index];
-            if (element._id === id) {
-                newCategory[index].title = title;
-                newCategory[index].description = description;
-                break;
-            }
-        }
-        setCategory(newCategory);
-    }
 
     // get user details
     const userFetched = {}
     const [user, setUser] = useState(userFetched)
+
 
     const getUserProfile = async (token) => {
         // API Call 
@@ -81,27 +60,64 @@ const CategoryState = (props) => {
         setUser(json)
     }
 
+
     // instructor fetched
     const instructorFetched = {}
     const [instructor, setInstructor] = useState(instructorFetched)
+
+
     const getInstructorProfile = async (token) => {
         // api call
         const response = await fetch(`${host}/api/auth/instructor/getinstructor`, {
             method: 'POST',
-            header: {
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': localStorage.getItem(token)
+            }
+        });
+        const json = await response.json();
+        setInstructor(json)
+    }
+
+
+    const categoryDetails = {}
+
+
+    const [categoryData, setCategoryData] = useState(categoryDetails)
+
+
+    const getCategoryDetails = async (id, token) => {
+        const response = await fetch(`${host}/api/category/find/${id}`, {
+            method: 'GET',
+            headers: {
                 'Content-Type': 'application/json',
                 "auth-token": localStorage.getItem(token)
             }
-        })
+        });
         const json = await response.json()
-        setInstructor(json)
+        setCategoryData(json)
+    }
+
+    // Delete a Instructor
+    const deleteInstructor = async (id) => {
+        // API Call
+        const response = await fetch(`${host}/api/instructor/delete/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                "auth-token": localStorage.getItem("adminToken")
+            }
+        });
+        const json = response.json();
+        const newInstructor = instructor.filter((instructor) => { return instructor._id !== id })
+        setInstructor(newInstructor)
     }
 
     // getting Videos details
     const videoFetched = []
     const [videos, setVideos] = useState(videoFetched)
-    const getVideoDetails = async (token) => {
-        const response = await fetch(`${host}/api/video/fetch`, {
+    const getVideoDetails = async (category, token) => {
+        const response = await fetch(`${host}/api/video/fetch/${category}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -112,8 +128,81 @@ const CategoryState = (props) => {
         setVideos(json);
     }
 
+
+
+    // Level will be fetched from here
+
+    const levelFetched = []
+
+    const [level, setLevel] = useState(levelFetched)
+
+    const getLevelDetails = async (token, category) => {
+        const response = await fetch(`${host}/api/level/fetch/${category}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                "auth-token": localStorage.getItem(token)
+            },
+        });
+        const json = await response.json();
+        setLevel(json);
+    }
+
+
+    const quizDetails = []
+    const [quiz, setQuiz] = useState(quizDetails)
+
+
+    const getQuiz = async (id, token) => {
+        const response = await fetch(`${host}/api/quiz/fetch/${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                "auth-token": localStorage.getItem(token)
+            }
+        });
+        const json = await response.json()
+        console.log(json.questions);
+        setQuiz(json)
+    }
+
+    const userFetchedAll = []
+
+    const [userAll, setUserAll] = useState(userFetchedAll)
+
+    // Get all user
+    const getUserAll = async () => {
+        // API Call 
+        const response = await fetch(`${host}/api/user/fetch`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                "auth-token": localStorage.getItem("adminToken")
+            }
+        });
+        const json = await response.json()
+        setUserAll(json)
+        // console.log(json);
+    }
+
+    const deleteUser = async (id) => {
+        const response = await fetch(`http://localhost:1000/api/user/delete/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                "auth-token": localStorage.getItem("adminToken")
+            }
+        });
+        const json = await response.json();
+        const newUser = userAll.filter((user) => { return user._id !== id })
+        setUserAll(newUser)
+        
+    }
+
+
+
     return (
-        <CategoryContext.Provider value={{ category, setCategory, editCategory, getCategory, deleteCategory, getUserProfile, user, videos, getVideoDetails, instructor, getInstructorProfile }}>
+        <CategoryContext.Provider value={{ category, setCategory, getCategory, deleteCategory, getUserProfile, user, videos, setVideos, getVideoDetails, instructor, getInstructorProfile, deleteInstructor, level, getLevelDetails, categoryData, getCategoryDetails, quiz, getQuiz, userAll, setUserAll, getUserAll,deleteUser }}>
             {props.children}
         </CategoryContext.Provider>
     )

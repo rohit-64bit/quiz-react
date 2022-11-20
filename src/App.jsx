@@ -38,6 +38,8 @@ import InstructorPRoutes from './PrivateRoute/InstructorPRoutes'
 import CategoryState from './context/category/categoryState'
 import WatchVideo from './pages/WatchVideo'
 import Level from './pages/Level'
+import AdminAnalytics from './pages/AdminAnalytics'
+import Videos from './pages/Videos'
 
 
 
@@ -95,6 +97,10 @@ function App() {
             <Learn />
           </UserPRoute>
           }></Route>
+          <Route path='/videos' element={<UserPRoute>
+            <Videos />
+          </UserPRoute>
+          }></Route>
           <Route path='/watchvideo' element={<UserPRoute>
             <WatchVideo />
           </UserPRoute>
@@ -113,13 +119,13 @@ function App() {
           <Route path='/admin/manage/quiz' element={<AdminPRoutes><AdminQuiz /></AdminPRoutes>}></Route>
           <Route path='/admin/manage/instructors' element={<AdminPRoutes><AdminInstructor /></AdminPRoutes>}></Route>
           <Route path='/admin/manage/users' element={<AdminPRoutes><AdminUsers /></AdminPRoutes>}></Route>
-          <Route path='/admin/analytics' element={<AdminPRoutes><AdminLogin /></AdminPRoutes>}></Route>
+          <Route path='/admin/analytics' element={<AdminPRoutes><AdminAnalytics /></AdminPRoutes>}></Route>
 
 
           {/* instructor section pages */}
           {/* <Route path='/instructor' element={<InstructorAuth />}></Route> */}
 
-          {!localStorage.getItem("instructorToken") ? <Route path='/instructor' element={<InstructorLogin />} ></Route> : <Route path='/instructor' element={<InstructorPRoutes><InstructorLevel /></InstructorPRoutes>}></Route>}
+          {!localStorage.getItem("AuthInstructor") ? <Route path='/instructor' element={<InstructorLogin />} ></Route> : <Route path='/instructor' element={<InstructorPRoutes><InstructorLevel /></InstructorPRoutes>}></Route>}
 
           <Route exact path='/instructor/home' element={<InstructorPRoutes><InstructorLevel /></InstructorPRoutes>}></Route>
           <Route exact path='/instructor/home/addquiz' element={<InstructorPRoutes><InstructorAddQuiz /></InstructorPRoutes>}></Route >

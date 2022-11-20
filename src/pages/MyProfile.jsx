@@ -6,16 +6,17 @@ import Header from "../components/Header"
 import CategoryContext from '../context/category/categoryContext'
 
 function MyProfile() {
-      // getting user details
+  // getting user details
 
-      const context = useContext(CategoryContext)
-      const { getUserProfile, user } = context;
-      useEffect(() => {
-          getUserProfile("userToken")
-      }, [])
+  const context = useContext(CategoryContext)
+  const { getUserProfile, user } = context;
+  useEffect(() => {
+    getUserProfile("userToken")
+  }, [])
+
   return (
     <>
-    <Header/>
+      <Header />
       <div className='flex'>
         <SideBar />
         <div className='p-10 overflow-y-auto h-[89.5vh] w-screen'>
@@ -25,18 +26,18 @@ function MyProfile() {
               <div className='font-medium text-xl'>{user.name}</div>
               <div className='font-light text-sm'>{user.email}</div>
             </div>
-            <div className='flex justify-between w-[20%] '>
+            <div className='flex flex-col justify-between w-[20%] '>
               <div className='flex flex-col'>
-                <p className='font-light'>Quiz Taken</p>
-                <div className='font-bold'>17</div>
+                <p className='font-light'>Contact No.</p>
+                <div className='font-bold'>{user.contact}</div>
               </div>
               <div className='flex flex-col'>
-                <p className='font-light'>Scoring Average</p>
-                <div className='font-bold'>4.5</div>
+                <p className='font-light'>DOB</p>
+                <div className='font-bold'>{user.dob}</div>
               </div>
             </div>
-            <Link to="/quizes" className='w-max'>
-              <button className='bg-blue-700 hover:bg-blue-800 transition-all ease-in-out duration-200 h-10 w-36 rounded-md text-center text-white font-medium hover:shadow-lg'>Start New Quiz</button>
+            <Link to="/editprofile" className='w-max'>
+              <button className='bg-blue-700 hover:bg-blue-800 transition-all ease-in-out duration-200 h-10 w-36 rounded-md text-center text-white font-medium hover:shadow-lg'>Edit Profile</button>
             </Link>
 
           </div>
