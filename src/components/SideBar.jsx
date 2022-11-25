@@ -10,17 +10,20 @@ import CategoryContext from '../context/category/categoryContext';
 
 
 function SideBar() {
+
+
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
     const context = useContext(CategoryContext)
-    const { getUserProfile, user } = context;
+    const { getUserProfile, user, setNotification } = context;
 
 
     const logoutManagers = () => {
         window.location.reload(true);
         localStorage.removeItem("userToken")
+        setNotification({ message: "Logout Successfully", type: 'success', status: 'true' })
     }
 
     return (

@@ -1,9 +1,13 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link, useNavigate } from "react-router-dom"
 import bglogin from '../assets/bg/bglogin.svg'
 import Header from "../components/Header"
+import CategoryContext from '../context/category/categoryContext'
 
 function Signin() {
+
+    const context = useContext(CategoryContext)
+    const { setNotification } = context;
 
     const [credentials, setCredentials] = useState({
         email: "",
@@ -25,11 +29,16 @@ function Signin() {
             body: JSON.stringify(credentials)
         });
         const json = await response.json()
+        console.log(json);
         // console.log(json);
-        if(json.success){
+        if (json.success) {
             // saving the auth token and redirect
-            localStorage.setItem("userToken",json.authtoken)
+            setNotification({ message: "Login Successfull", type: 'success', status: 'true' })
+            localStorage.setItem("userToken", json.authtoken)
             navigate("/quizes")
+
+        }else{
+            setNotification({ message: "Something Went Wrong", type: 'error', status: 'true' })
         }
     }
 
@@ -61,6 +70,7 @@ function Signin() {
                             onChange={onChange}
                             value={credentials.email}
                             className='text-base font-medium px-7 h-14 rounded-3xl shadow-xl shadow-slate-200  border border-gray-200 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 outline-none transition-all duration-200 ease-in-out '
+                            required
                         />
 
                         <p className='text-xs ml-7 mt-2 text-slate-500'>Password</p>
@@ -70,6 +80,7 @@ function Signin() {
                             onChange={onChange}
                             value={credentials.password}
                             className='text-base font-black px-7 h-14 rounded-3xl shadow-xl shadow-slate-200  border border-gray-200 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 outline-none transition-all duration-200 ease-in-out '
+                            required
                         />
 
                         {/* <div className='flex text-sm mt-1 text-slate-500 justify-between p-2'>

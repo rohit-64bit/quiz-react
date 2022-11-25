@@ -29,7 +29,7 @@ function Quizon() {
         setClick(true)
     }
 
-    const { questions } = quiz;
+    const { questions,level } = quiz;
 
 
     // const totalQuestion = quiz.questions.length;
@@ -40,23 +40,11 @@ function Quizon() {
     }
 
 
-    const handleReportSubmit = async (e) => {
-        e.preventDefault();
-        const response = await fetch("http://localhost:1000/api/userreport/create", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'auth-token': localStorage.getItem('userToken')
-            },
-            body: JSON.stringify({ userID: user._id, userName: user.name, email: user.email, finalScore: score, correctAns: correctAns, quizCategory: quiz.category, quizLevel: quiz.level, totalQuestion: quiz.questions?.length, category: quiz.categoryName, level: quiz.levelName })
-        });
-        const json = await response.json()
-    }
 
     useEffect(() => {
         getUserProfile("userToken")
         getQuiz(levelID, 'userToken')
-        console.log(quiz.questions);
+        // console.log(quiz.questions);
     }, [])
 
 
@@ -89,12 +77,15 @@ function Quizon() {
 
 
                     {questionNo === quiz.questions?.length - 1 ?
-                        <Link
-                            to='/score'
-                            onClick={handleReportSubmit}
-                            state={{ finalScore: score, correctAns: correctAns, quizCategory: quiz.category, quizLevel: quiz.level, totalQuestion: quiz.questions?.length, category: quiz.categoryName, level: quiz.levelName }}
-                            className='bg-green-700 text-center py-3 hover:bg-green-800 duration-300 transition-all ease-in-out text-white text-lg font-medium rounded-lg w-48 my-auto'
-                        >Finish</Link>
+                        
+                            <Link
+                                
+                                to='/score'
+                                state={{ userID: user._id ,finalScore: score, correctAns: correctAns, quizCategory: quiz.category, quizLevel: quiz.level, totalQuestion: quiz.questions?.length, category: quiz.categoryName, level: quiz.levelName }}
+
+                                className='bg-green-700 text-center py-3 hover:bg-green-800 duration-300 transition-all ease-in-out text-white text-lg font-medium rounded-lg w-48 my-auto'
+                            >Finish</Link>
+                        
                         : <div></div>
                     }
                 </div>
@@ -121,7 +112,7 @@ function Quizon() {
                         </div>
                     </div>
                     :
-                    <div>Quiz Loading</div>
+                    <div className='flex m-auto text-lg font-bold'>No Quiz Found...</div>
                 }
 
 

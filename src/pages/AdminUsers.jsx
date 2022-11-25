@@ -13,13 +13,14 @@ function ManageUser(props) {
     const handleClose = () => setOpen(false);
 
     const context = useContext(CategoryContext)
-    const { deleteUser } = context;
+    const { deleteUser,setNotification } = context;
 
 
     // /api/user/delete/:id
     const handleDelete = () => {
         deleteUser(props.id)
-        window.location.reload()
+        setNotification({ message: "User Deleted", type: 'success', status: 'true' })
+        // window.location.reload()
     }
 
     return (
@@ -36,7 +37,7 @@ function ManageUser(props) {
                     <button className='mx-auto p-3 bg-red-600 text-white font-medium rounded-md hover:bg-red-700 transition-all ease-out duration-300 w-full' onClick={handleDelete}>CONFIRM DELETE USER</button>
                 </div>
             </Modal>
-            <div className='flex w-full justify-between bg-slate-100 p-5 rounded-lg hover:shadow-lg transition-all ease-in-out duration-300 border-2 '>
+            <div className='flex w-full justify-between bg-slate-100 p-5 hover:bg-blue-200 rounded-lg hover:shadow-lg transition-all ease-in-out duration-300 border-2 '>
                 <div className='flex gap-5 my-auto'>
                     <p className='font-medium text-lg'>Name : {props.name}</p>
                     <p className='font-medium text-lg'>Email : {props.email}</p>
@@ -68,7 +69,7 @@ function AdminUsers() {
 
     return (
         <>
-            <Header />
+            <Header details="MANAGE USER" />
             <div className='flex'>
                 <SidebarAdmin />
                 <div className='p-10 h-[89.5vh] flex flex-col w-screen'>

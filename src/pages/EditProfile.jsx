@@ -81,7 +81,7 @@ function EditProfile() {
 
 
 
-          <Input
+          <input
             type="text"
             name="name"
             className='text-base font-medium px-7 h-14  shadow-xl shadow-slate-200  border border-gray-200 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 outline-none transition-all duration-200 ease-in-out bg-white'

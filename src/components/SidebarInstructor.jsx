@@ -26,7 +26,7 @@ function SidebarInstructor() {
 
     return (
         <>
-            <div className='flex flex-col h-[89.5vh] w-24  border-r-2 shadow-lg shadow-slate-800 justify-between'>
+            <div className='flex flex-col h-[90.5vh] w-24  border-r-2 shadow-lg shadow-slate-800 justify-between'>
                 <Modal
                     open={open}
                     onClose={handleClose}

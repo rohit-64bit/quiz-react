@@ -10,6 +10,15 @@ function MyProfile() {
 
   const context = useContext(CategoryContext)
   const { getUserProfile, user } = context;
+
+  let date = user.dob;
+  let timeStamp = new Date(date).getTime();
+  let day = new Date(timeStamp).getDate();
+  let month = new Date(timeStamp).toLocaleString('default',{month:'short'});
+  let year = new Date(timeStamp).getFullYear();
+
+  let dob = `${day} ${month} ${year}`
+
   useEffect(() => {
     getUserProfile("userToken")
   }, [])
@@ -33,7 +42,7 @@ function MyProfile() {
               </div>
               <div className='flex flex-col'>
                 <p className='font-light'>DOB</p>
-                <div className='font-bold'>{user.dob}</div>
+                <div className='font-bold'>{dob}</div>
               </div>
             </div>
             <Link to="/editprofile" className='w-max'>

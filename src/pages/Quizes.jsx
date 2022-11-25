@@ -19,10 +19,10 @@ function Quizes() {
       <Header />
       <div className="flex">
         <SideBar />
-        <div className='p-10 overflow-y-auto grid grid-cols-5 gap-5 h-[89.5vh] bg-[url("/src/assets/bg/undraw_art_museum_-8-or4.svg")] bg-cover bg-no-repeat w-screen'>
+        <div className='p-10 overflow-y-auto grid grid-cols-5 gap-5 h-[89.5vh] bg-[url("/src/assets/bg/undraw_art_museum_-8-or4.svg")] bg-inherit bg-right-bottom bg-fixed bg-no-repeat w-screen'>
           {category.map((categories) => {
             return (
-              <Link to="/level" state={{category : categories}} key={categories._id} className="h-48 w-56 hover:shadow-lg border-2  transition-all ease-in duration-300 bg-blue-100 hover:bg-blue-700 hover:text-white p-5 rounded-3xl flex flex-col justify-around">
+              <Link to="/level" state={{ category: categories }} key={categories._id} className="h-48 w-56 hover:shadow-lg border-2  transition-all ease-in duration-200 bg-blue-100 hover:bg-blue-700 hover:text-white p-5 rounded-3xl flex flex-col justify-around">
                 <div className='text-lg font-bold'>
                   {categories.name}
                 </div>

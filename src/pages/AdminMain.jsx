@@ -25,14 +25,14 @@ function CategoryView(props) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  
+
   let onChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value })
   }
 
   function handleDelete() {
     deleteCategory(props.id)
-    window.location.reload();
+    // window.location.reload();
   }
 
   const handleEdit = (e) => {
@@ -53,15 +53,15 @@ function CategoryView(props) {
       },
       body: JSON.stringify({ name: data.name, description: data.description })
     });
-    // const json = await response.json();
+    const json = await response.json();
     // console.log(json);
   }
 
   return (
     <>
-      <div className='w-full flex justify-between p-5 rounded-lg bg-white'>
+      <div className='w-full flex justify-between p-5 rounded-lg bg-white hover:bg-green-200 hover:shadow-lg transition-all ease-in-out duration-300'>
         <p className=' my-auto font-medium'>{props.name}</p>
-        <p className=' my-auto font-light'>{props.description}</p>
+        <p className=' my-auto font-light'>{props.description.length > 30 ? props.description.slice(0,30) + "..." : props.description}</p>
         <div className='flex gap-5 text-white'>
           <button className='bg-green-600 rounded-lg p-1 hover:bg-green-700 transition-all ease-in-out duration-500' onClick={handleOpen}><EditIcon /></button>
           <button className='bg-red-600 rounded-lg p-1 hover:bg-red-700 transition-all ease-in-out duration-500' onClick={handleDelete}><DeleteIcon /></button>
@@ -97,6 +97,9 @@ function CategoryView(props) {
 }
 
 function AdminMain() {
+
+
+
   const [data, setData] = useState({
     name: "",
     description: "",
@@ -117,7 +120,7 @@ function AdminMain() {
   }
 
   const context = useContext(CategoryContext)
-  const { category, getCategory, } = context;
+  const { category, getCategory, setNotification } = context;
 
   useEffect(() => {
     getCategory("adminToken");
@@ -152,8 +155,8 @@ function AdminMain() {
             <div className='bg-slate-100 h-[70.5vh] w-[42rem] rounded-lg shadow-lg p-5  '>
               <p className='text-lg font-bold'>Add Category</p>
               <form method='' onSubmit={handleSubmit} className='flex flex-col gap-10 p-10 '>
-                <Input onChange={onChange} placeholder='Category Name' name='name' type='text'></Input>
-                <Input onChange={onChange} placeholder='Category Description' name='description' type='text'></Input>
+                <Input onChange={onChange} required placeholder='Category Name' name='name' type='text'></Input>
+                <Input onChange={onChange} required placeholder='Category Description' name='description' type='text'></Input>
                 <button className='w-full h-12 bg-blue-600 hover:bg-blue-700 font-medium text-white transition-all ease-in-out duration-500 rounded-lg ' type='submit'>ADD CATEGORY</button>
               </form>
             </div>

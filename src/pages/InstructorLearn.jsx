@@ -102,7 +102,7 @@ function InstructorLearn() {
 
             {videos.map((options) => {
               return (
-                <Video id={options._id} key={options._id} title={options.title} description={options.description} imageLink={options.imageLink} />
+                <Video id={options._id} key={options._id} title={options.title} description={options.categoryName} imageLink={options.imageLink} />
               )
             })}
 

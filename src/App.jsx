@@ -40,6 +40,7 @@ import WatchVideo from './pages/WatchVideo'
 import Level from './pages/Level'
 import AdminAnalytics from './pages/AdminAnalytics'
 import Videos from './pages/Videos'
+import Notification from './components/Notification'
 
 
 
@@ -136,6 +137,7 @@ function App() {
           {/* 404 not found */}
           <Route path='*' element={<NotFound />}></Route>
         </Routes >
+        <Notification/>
       </CategoryState>
     </>
   )

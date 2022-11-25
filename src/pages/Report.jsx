@@ -65,12 +65,7 @@ function Report() {
         setReport(json);
     }
 
-
-
-
-    console.log(report);
-
-
+    
     return (
         <>
             <Header details="YOUR REPORT" />

@@ -1,11 +1,16 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 import bgsignup from '../assets/bg/bgsignup.svg'
 import Header from "../components/Header"
+import CategoryContext from '../context/category/categoryContext'
 
 
 function Signup() {
+
+  const context = useContext(CategoryContext)
+  const { notification, setNotification } = context;
+
   const [credentials, setCredentials] = useState({
     name: "",
     email: "",
@@ -26,11 +31,15 @@ function Signup() {
       body: JSON.stringify({ email: credentials.email, name: credentials.name, contact: credentials.contact, dob: credentials.dob, password: credentials.password })
     });
     const json = await response.json()
+
     // console.log(json);
     if (json.success) {
       // saving the auth token and redirect
       // localStorage.setItem("userToken", json.authtoken)
+      setNotification({ message: "User Created Successfully", type: 'success', status: 'true' })
       navigate({ pathname: "/signin" }, { replace: true })
+    } else {
+      setNotification({ message: "Something Went Wrong", type: 'error', status: 'true' })
     }
   }
   let onChange = (e) => {
@@ -59,6 +68,7 @@ function Signup() {
               name="name"
               onChange={onChange}
               className='text-base font-medium px-7 h-14 rounded-3xl shadow-xl shadow-slate-200  border border-gray-200 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 outline-none transition-all duration-200 ease-in-out '
+              required
             />
 
 
@@ -69,6 +79,7 @@ function Signup() {
               name="email"
               onChange={onChange}
               className='text-base font-medium px-7 h-14 rounded-3xl shadow-xl shadow-slate-200  border border-gray-200 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 outline-none transition-all duration-200 ease-in-out '
+              required
             />
 
             <p className='text-xs ml-7 mt-2 text-slate-500'>Contact No.</p>
@@ -78,6 +89,7 @@ function Signup() {
               name="contact"
               onChange={onChange}
               className='text-base font-medium px-7 h-14 rounded-3xl shadow-xl shadow-slate-200  border border-gray-200 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 outline-none transition-all duration-200 ease-in-out '
+              required
             />
 
             <p className='text-xs ml-7 mt-2 text-slate-500'>DOB</p>
@@ -87,6 +99,7 @@ function Signup() {
               name="dob"
               onChange={onChange}
               className='text-base font-medium px-7 h-14 rounded-3xl shadow-xl shadow-slate-200  border border-gray-200 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 outline-none transition-all duration-200 ease-in-out '
+              required
             />
 
             <p className='text-xs ml-7 mt-2 text-slate-500'>Password</p>
@@ -96,6 +109,7 @@ function Signup() {
               name="password"
               onChange={onChange}
               className='text-base font-black px-7 h-14 rounded-3xl shadow-xl shadow-slate-200  border border-gray-200 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-200 outline-none transition-all duration-200 ease-in-out '
+              required
             />
             {/* <div className='flex text-sm mt-1 text-slate-500'>
               <input type="checkbox"

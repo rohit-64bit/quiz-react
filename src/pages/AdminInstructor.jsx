@@ -26,9 +26,7 @@ function Instructors(props) {
         contact: "",
         email: "",
         address: "",
-        qualification: "",
-        password: "",
-        categoryName: ""
+        qualification: ""
     })
 
 
@@ -45,28 +43,34 @@ function Instructors(props) {
     }
 
     const context = useContext(CategoryContext)
-    const { category, getCategory, deleteInstructor } = context; 
+    const { category, getCategory, deleteInstructor } = context;
 
     useEffect(() => {
         getCategory("adminToken");
     }, [])
 
 
-    const id = props.id;
+    let id = props.id;
 
-    const handleEditInstructor = async (id) => {
-        const response = await fetch(`http://localhost:1000/api/instructor/update/${id}`, {
+    const handleEditInstructor = async (instructorId) => {
+        console.log(instructorId);
+        const response = await fetch(`http://localhost:1000/api/instructor/update/${instructorId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
                 "auth-token": localStorage.getItem("adminToken")
             },
-            body: JSON.stringify({ instructorName: data.name, email: data.email, phoneNo: data.contact, address: data.address, qualification: data.qualification, password: data.password, categoryName: data.categoryName, categoryAssinged: icategory }),
+            body: JSON.stringify({ id: id, instructorName: data.name, email: data.email, phoneNo: data.contact, address: data.address, qualification: data.qualification }),
         });
+    }
+
+    function handleEdit() {
+        handleEditInstructor(props.id)
     }
 
     function handleDelete() {
         deleteInstructor(id);
+        // setNotification({ message: "Instructor Deleted Successfully", type: 'success', status: 'true' })
         window.location.reload();
     }
 
@@ -82,9 +86,37 @@ function Instructors(props) {
                 className="flex"
             >
                 <div className='m-auto bg-white p-10 rounded-lg w-[50%] shadow-slate-700 shadow-lg'>
-                    <form action="" onSubmit={handleEditInstructor} className='flex flex-col gap-5 justify-around'>
+                    <form action="" className='flex flex-col gap-5 justify-around'>
 
-                        <p className='font-bold text-lg text-center'>ADD INSTRUCTOR</p>
+                        <p className='font-bold text-lg text-center'>EDIT INSTRUCTORS PII</p>
+                        <div className="flex gap-3">
+                            <div>
+                                <p className='text-slate-500 font-medium text-xs'>Instructor Name</p>
+                                <div className='font-medium'>{props.instructorName}</div>
+                            </div>
+                            <div>
+                                <p className='text-slate-500 font-medium text-xs'>Email</p>
+                                <div className='font-medium'>{props.email}</div>
+                            </div>
+                            <div>
+                                <p className='text-slate-500 font-medium text-xs'>Category</p>
+                                <div className='font-medium'>{props.categoryAssinged}</div>
+                            </div>
+                            <div>
+                                <p className='text-slate-500 font-medium text-xs'>Contact</p>
+                                <div className='font-medium'>{props.contact}</div>
+                            </div>
+                        </div>
+                        <div className="flex gap-3">
+                            <div>
+                                <p className='text-slate-500 font-medium text-xs'>Address</p>
+                                <div className='font-medium'>{props.address}</div>
+                            </div>
+                            <div>
+                                <p className='text-slate-500 font-medium text-xs'>Qualification</p>
+                                <div className='font-medium'>{props.qualification}</div>
+                            </div>
+                        </div>
                         <Input className='font-bold' onChange={onChange} name='name' placeholder='Name'></Input>
                         <Input className='font-bold' onChange={onChange} name='contact' placeholder='Phone No'></Input>
 
@@ -93,7 +125,7 @@ function Instructors(props) {
 
                         <Input className='font-bold' onChange={onChange} name='qualification' placeholder='Qualification'></Input>
 
-                        <TextField
+                        {/* <TextField
                             id="outlined-select-currency"
                             select
                             label="Category"
@@ -114,13 +146,14 @@ function Instructors(props) {
 
                         <Input className='font-bold' onChange={onChange} name='categoryName' placeholder='Type The Selected Category Name'></Input>
 
-                        <Input className='font-bold' onChange={onChange} name='password' placeholder='Password'></Input>
+                        <Input className='font-bold' onChange={onChange} name='password' placeholder='Password'></Input> */}
                         <Button sx={{
                             "border": 2,
                             "borderRadius": 2
                         }}
                             type="submit"
-                        >CONFIRM</Button>
+                            onClick={handleEdit}
+                        >CONFIRM EDIT</Button>
                     </form>
                 </div>
             </Modal>
@@ -137,11 +170,11 @@ function Instructors(props) {
                     <button className='w-full rounded-md hover:bg-red-800 font-medium bg-red-700 transition-all ease-in duration-300 text-xl text-white p-3' onClick={handleDelete}>DELETE</button>
                 </div>
             </Modal>
-            <div className='flex w-full justify-between bg-slate-100 p-5 rounded-lg hover:shadow-lg transition-all ease-in-out duration-300 border-2 '>
+            <div className='flex w-full justify-between bg-slate-100 hover:bg-indigo-200 p-5 rounded-lg hover:shadow-lg transition-all ease-in-out duration-300 border-2 '>
                 <div className='flex gap-5 my-auto'>
-                    <p className='text-lg flex '><b className='font-medium text-lg'>Name : </b> {props.instructorName}</p>
-                    <p className='text-lg flex '><b className='font-medium text-lg'>Email : </b>{props.email}</p>
-                    <p className='text-lg flex '><b className='font-medium text-lg'>Category : </b>{props.categoryAssinged}</p>
+                    <p className='text-lg flex '><b className='font-medium text-lg mr-1 '>Name : </b> {props.instructorName}</p>
+                    <p className='text-lg flex '><b className='font-medium text-lg mr-1 '>Email : </b> {props.email}</p>
+                    <p className='text-lg flex '><b className='font-medium text-lg mr-1 '>Category Name : </b> {props.categoryAssinged}</p>
                 </div>
                 <div className='flex gap-5'>
 
@@ -164,11 +197,12 @@ function AdminInstructor() {
 
     // getting all categories
     const context = useContext(CategoryContext)
-    const { category, getCategory, } = context;
+    let { category, getCategory, setNotification } = context;
 
-    useEffect(() => {
-        getCategory("adminToken");
-    }, [])
+
+
+    const [sortedCategory, setSortedCategory] = useState([])
+
 
     // api requests
     const host = "http://localhost:1000"
@@ -190,7 +224,26 @@ function AdminInstructor() {
         const json = await response.json()
         setInstructor(json)
     }
+
+
+    const [nonCategories, setNonCategories] = useState([])
+    const getNonCategories = async () => {
+        const response = await fetch(`${host}/api/category/fetch/notcategory`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                "auth-token": localStorage.getItem("adminToken")
+            }
+        });
+        const json = await response.json()
+        setNonCategories(json)
+        console.log(json);
+    }
+
+
     useEffect(() => {
+        getCategory("adminToken");
+        getNonCategories("adminToken");
         getInstructor();
     }, [])
 
@@ -201,8 +254,7 @@ function AdminInstructor() {
         email: "",
         address: "",
         qualification: "",
-        password: "",
-        categoryName: ""
+        password: ""
     })
 
 
@@ -220,20 +272,27 @@ function AdminInstructor() {
 
     // creating instructor
     const handleCreateInstructor = async (e) => {
+        // e.preventDefault()
         const response = await fetch(`${host}/api/auth/instructor/createinstructor`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'auth-token': localStorage.getItem("adminToken")
             },
-            body: JSON.stringify({ instructorName: data.name, email: data.email, phoneNo: data.contact, address: data.address, qualification: data.qualification, password: data.password, categoryAssinged: icategory, categoryName: data.categoryName }),
+            body: JSON.stringify({ instructorName: data.name, email: data.email, phoneNo: data.contact, address: data.address, qualification: data.qualification, password: data.password, categoryAssinged: icategory._id, categoryName: icategory.name }),
         });
         const json = await response.json()
+
+        if (json.success) {
+            setNotification({ message: "Instructor Created Successfully", type: 'success', status: 'true' })
+            // window.location.reload()
+        }
     }
+
 
     return (
         <>
-            <Header />
+            <Header details="MANAGE INSTRUCTOR" />
             <div className='flex'>
                 <SidebarAdmin />
                 <div className='p-10 h-[89.5vh] flex flex-col w-screen'>
@@ -248,38 +307,60 @@ function AdminInstructor() {
                             aria-describedby="modal-modal-description"
                             className="flex"
                         >
-                            <div className='m-auto bg-white p-10 rounded-lg w-[50%] shadow-slate-700 shadow-lg'>
-                                <form action="" onSubmit={handleCreateInstructor} className='flex flex-col gap-5 justify-around'>
+                            <div className='m-auto bg-white p-10 flex rounded-lg w-[50%] shadow-slate-700 shadow-lg'>
+                                {/* <div className='w-[40%]'>
+                                    <table className=''>
+                                        <thead>
+                                            <tr>
+                                                <th>Instructor Email</th>
+                                                <th>Assinged Category</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {instructor.map((data) => {
+                                                return (
+                                                    <tr key={data._id}>
+                                                        <td>{data.email}</td>
+                                                        <td>{data.categoryName}</td>
+                                                    </tr>
+                                                )
+                                            })}
+                                        </tbody>
+                                    </table>
+                                </div> */}
+                                <form action="" onSubmit={handleCreateInstructor} className='flex flex-col gap-5 justify-around w-full'>
 
                                     <p className='font-bold text-lg text-center'>ADD INSTRUCTOR</p>
-                                    <Input className='font-bold' onChange={onChange} name='name' placeholder='Name'></Input>
-                                    <Input className='font-bold' onChange={onChange} name='contact' placeholder='Phone No'></Input>
-                                    <Input className='font-bold' onChange={onChange} name='email' placeholder='Email'></Input>
-                                    <Input className='font-bold' onChange={onChange} name='address' placeholder='Address'></Input>
-                                    <Input className='font-bold' onChange={onChange} name='qualification' placeholder='Qualification'></Input>
+                                    <Input className='font-bold' required onChange={onChange} name='name' placeholder='Name'></Input>
+                                    <Input className='font-bold' required onChange={onChange} name='contact' placeholder='Phone No'></Input>
+                                    <Input className='font-bold' required onChange={onChange} name='email' placeholder='Email'></Input>
+                                    <Input className='font-bold' required onChange={onChange} name='address' placeholder='Address'></Input>
+                                    <Input className='font-bold' required onChange={onChange} name='qualification' placeholder='Qualification'></Input>
                                     <TextField
-                                        id="outlined-select-currency"
                                         select
                                         label="Category"
                                         value={icategory}
                                         onChange={handleChange}
                                         name='category'
+                                        required
                                     >
 
-                                        {category.map((option) => {
+                                        {nonCategories.map((option) => {
                                             return (
-                                                <MenuItem key={option._id} value={option._id}>
+                                                <MenuItem key={option._id} value={option}>
                                                     {option.name}
                                                 </MenuItem>
                                             )
                                         })}
 
                                     </TextField>
-                                    <Input className='font-bold' onChange={onChange} name='password' placeholder='Password'></Input>
-                                    <Button sx={{
-                                        "border": 2,
-                                        "borderRadius": 2
-                                    }}
+                                    <Input required className='font-bold' onChange={onChange} name='password' placeholder='Password'></Input>
+
+                                    <Button
+                                        sx={{
+                                            "border": 2,
+                                            "borderRadius": 2
+                                        }}
                                         type="submit"
                                     >CONFIRM</Button>
                                 </form>
@@ -291,7 +372,7 @@ function AdminInstructor() {
 
                         {instructor.map((instructors) => {
                             return (
-                                <Instructors id={instructors._id} instructorName={instructors.instructorName} email={instructors.email} key={instructors._id} categoryAssinged={instructors.categoryAssinged} />
+                                <Instructors id={instructors._id} instructorName={instructors.instructorName} email={instructors.email} key={instructors._id} categoryAssinged={instructors.categoryName} address={instructors.address} qualification={instructors.qualification} contact={instructors.phoneNo} />
                             )
                         })}
 

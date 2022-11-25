@@ -7,6 +7,8 @@ const CategoryState = (props) => {
 
     // multiple category fetched
 
+    const [notification, setNotification] = useState({})
+
     const categoryFetched = []
 
     const [category, setCategory] = useState(categoryFetched)
@@ -37,6 +39,14 @@ const CategoryState = (props) => {
             }
         });
         const json = response.json();
+
+        if (json) {
+            setNotification({ message: "Category Deleted Successfully", type: 'success', status: 'true' })
+        } else {
+            setNotification({ message: "Something Went Wrong", type: 'error', status: 'true' })
+        }
+
+
         const newCategory = category.filter((category) => { return category._id !== id })
         setCategory(newCategory)
     }
@@ -57,6 +67,7 @@ const CategoryState = (props) => {
             }
         });
         const json = await response.json()
+        // console.log(json);
         setUser(json)
     }
 
@@ -109,6 +120,11 @@ const CategoryState = (props) => {
             }
         });
         const json = response.json();
+        if (json) {
+            setNotification({ message: "Instructor Deleted Successfully", type: 'success', status: 'true' })
+        } else {
+            setNotification({ message: "Something Went Wrong", type: 'error', status: 'true' })
+        }
         const newInstructor = instructor.filter((instructor) => { return instructor._id !== id })
         setInstructor(newInstructor)
     }
@@ -194,15 +210,20 @@ const CategoryState = (props) => {
             }
         });
         const json = await response.json();
+        if (json) {
+            setNotification({ message: "User Deleted Successfully", type: 'success', status: 'true' })
+        } else {
+            setNotification({ message: "Something Went Wrong", type: 'error', status: 'true' })
+        }
         const newUser = userAll.filter((user) => { return user._id !== id })
         setUserAll(newUser)
-        
+
     }
 
 
 
     return (
-        <CategoryContext.Provider value={{ category, setCategory, getCategory, deleteCategory, getUserProfile, user, videos, setVideos, getVideoDetails, instructor, getInstructorProfile, deleteInstructor, level, getLevelDetails, categoryData, getCategoryDetails, quiz, getQuiz, userAll, setUserAll, getUserAll,deleteUser }}>
+        <CategoryContext.Provider value={{ category, setCategory, getCategory, deleteCategory, getUserProfile, user, videos, setVideos, getVideoDetails, instructor, getInstructorProfile, deleteInstructor, level, getLevelDetails, categoryData, getCategoryDetails, quiz, getQuiz, userAll, setUserAll, getUserAll, deleteUser, notification, setNotification }}>
             {props.children}
         </CategoryContext.Provider>
     )

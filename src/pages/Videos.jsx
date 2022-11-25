@@ -34,10 +34,10 @@ function Videos() {
                                 <img src={options.imageLink} className="w-auto rounded-t-lg" alt="" />
                                 <div className='px-5'>
                                     <p className='font-bold text-xl'>{options.title}</p>
-                                    <p className='text-sm'>{options.description}</p>
+                                    <p className='text-sm'>{options.categoryName}</p>
                                 </div>
                                 <Link to='/watchvideo' state={{ options: options }} className='' >
-                                    <button className='bg-blue-700 hover:bg-blue-800 transition-all ease-in-out duration-200 h-10 w-72 rounded-b-lg text-center text-white font-medium hover:shadow-lg'>
+                                    <button className='bg-blue-700 hover:bg-blue-800 transition-all ease-in-out duration-200 h-10 w-72 rounded-b-lg text-center text-white font-medium hover:shadow-lg hover:rounded-lg hover:translate-y-1'>
                                         WATCH VIDEO
                                     </button>
                                 </Link>

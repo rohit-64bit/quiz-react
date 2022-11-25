@@ -1,4 +1,4 @@
-import { Avatar } from '@mui/material'
+import { Alert, Avatar, Snackbar } from '@mui/material'
 import React, { useContext, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
@@ -10,6 +10,7 @@ import CategoryContext from '../context/category/categoryContext';
 
 
 function Header(props) {
+
     let navigate = useNavigate();
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
@@ -21,7 +22,8 @@ function Header(props) {
     // getting user details
 
     const context = useContext(CategoryContext)
-    const { getUserProfile, user } = context;
+    const { getUserProfile, user, notification, setNotification } = context;
+
     useEffect(() => {
         getUserProfile("userToken")
     }, [])
@@ -36,12 +38,14 @@ function Header(props) {
         navigate({ pathname: "/signin" });
     }
 
+
+
     return (
         <>
+
             <div className='flex p-5 justify-between bg-slate-100 outline outline-1 outline-slate-300 '>
                 <Link to="/" className='font-bold flex text-xl my-auto'>TAKE YOUR QUIZ <p className='ml-2 text-blue-600  text-base my-auto'>{props.details}</p></Link>
-
-                <div className='flex gap-10 my-auto'>
+                {localStorage.getItem('adminToken') || localStorage.getItem('AuthInstructor') != null ? <div></div> : <div className='flex gap-10 my-auto'>
 
                     {!localStorage.getItem('userToken') ?
                         <div className="flex gap-5">
@@ -55,7 +59,9 @@ function Header(props) {
                             </Link>
                         </div>
                         :
-                        <Avatar onClick={handleClick} sx={{ width: 36, height: 36, padding: 0 }}></Avatar>
+                        <Avatar onClick={handleClick} sx={{ width: 34.5, height: 34.5, padding: 0 }}>
+                            {user.name?.slice(0, 1)}
+                        </Avatar>
                     }
 
 
@@ -83,7 +89,8 @@ function Header(props) {
                     </Menu>
 
 
-                </div>
+                </div>}
+
 
             </div>
 

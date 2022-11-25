@@ -23,7 +23,7 @@ function Learn() {
       <Header details="LEARN" />
       <div className='flex'>
         <SideBar />
-        <div className='p-10 overflow-y-auto grid grid-cols-5 gap-5 h-[89.5vh] bg-[url("/src/assets/bg/undraw_online_learning_re_qw08.svg")] bg-contain bg-right-bottom bg-no-repeat w-screen'>
+        <div className='p-10 overflow-y-auto grid grid-cols-5 gap-5 h-[89.5vh] bg-[url("/src/assets/bg/undraw_online_learning_re_qw08.svg")] bg-inherit bg-right-bottom bg-fixed bg-no-repeat w-screen'>
           {category.map((categories) => {
             return (
               <Link to="/videos" state={{ categoryID: categories._id, categoryName: categories.name }} key={categories._id} className="h-48 w-56 hover:shadow-lg border-2  transition-all ease-in duration-300 bg-green-100 hover:bg-green-700 hover:text-white p-5 rounded-3xl flex flex-col justify-around">
