@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Header from '../components/Header'
 import SidebarInstructor from '../components/SidebarInstructor'
 import notdatafound from "../assets/images/undraw_no_data_re_kwbl.svg"
 import { Link } from 'react-router-dom'
+import CategoryContext from '../context/category/categoryContext'
 
 
 
@@ -47,10 +48,13 @@ function UserReport(props) {
 
 function InstructorReport() {
 
+    const context = useContext(CategoryContext)
+    const { instructor, getInstructorProfile } = context;
+
     const reportFetched = []
     const [report, setReport] = useState(reportFetched)
-    const getUserReport = async () => {
-        const response = await fetch(`http://localhost:1000/api/userreport/fetch/reports`, {
+    const getUserReport = async (id) => {
+        const response = await fetch(`http://localhost:1000/api/userreport/fetch/instructor/${id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -59,12 +63,15 @@ function InstructorReport() {
         });
         const json = await response.json();
         setReport(json);
-        console.log(json);
+        // console.log(json);
     }
 
+    // const { categoryAssinged } = instructor;
+
     useEffect(() => {
-        getUserReport()
-    }, [])
+        getInstructorProfile("AuthInstructor");
+        getUserReport(instructor.categoryAssinged)
+    }, [instructor.categoryAssinged])
 
 
     return (
@@ -84,7 +91,7 @@ function InstructorReport() {
                             <div className='mx-auto text-2xl font-medium'>Hey! Admin nothing to show here</div>
                             <Link to="/instructor" className='mx-auto px-5 py-3 bg-blue-600 text-white font-medium text-lg rounded-lg hover:bg-blue-700 transition-all ease-in-out duration-500 hover:translate-y-1'>RETURN TO INSTRUCTOR HOME</Link>
                         </div>
-                        }
+                    }
 
 
 

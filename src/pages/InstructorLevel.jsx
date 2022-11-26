@@ -87,7 +87,7 @@ function InstructorLevel() {
     }
 
     useEffect(() => {
-        getCategoryDetails(credentials.category, "AuthInstructor")
+        // getCategoryDetails(credentials.category, "AuthInstructor")
         getLevelDetails("AuthInstructor", credentials.category)
         getInstructorProfile("AuthInstructor");
     }, [credentials.category])
@@ -150,7 +150,7 @@ function InstructorLevel() {
                             </div>
                             <div>
                                 <p className='text-slate-500 font-medium text-xs'>Assinged Category</p>
-                                <div className='font-medium'>{categoryData.name}</div>
+                                <div className='font-medium'>{instructor.categoryName}</div>
                             </div>
                             <div>
                                 <p className='text-slate-500 font-medium text-xs'>Instructor ID</p>
@@ -168,7 +168,7 @@ function InstructorLevel() {
                     <div className='overflow-y-auto h-[90%] grid grid-cols-3 gap-8 '>
                         {level.map((option) => {
                             return (
-                                <Level id={option._id} categoryId={instructor.categoryAssinged} name={categoryData.name} key={option._id} level={option.name} />
+                                <Level id={option._id} categoryId={instructor.categoryAssinged} name={instructor.categoryName} key={option._id} level={option.name} />
                             )
                         })}
 

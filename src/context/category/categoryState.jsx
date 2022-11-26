@@ -91,7 +91,7 @@ const CategoryState = (props) => {
     }
 
 
-    const categoryDetails = {}
+    const categoryDetails = []
 
 
     const [categoryData, setCategoryData] = useState(categoryDetails)
@@ -107,6 +107,7 @@ const CategoryState = (props) => {
         });
         const json = await response.json()
         setCategoryData(json)
+        // console.log(json);
     }
 
     // Delete a Instructor

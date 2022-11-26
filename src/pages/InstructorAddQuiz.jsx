@@ -22,7 +22,8 @@ function InstructorAddQuiz() {
     // calling the get category details function
     useEffect(() => {
         getCategoryDetails(category, "AuthInstructor")
-        getQuiz(levelID, 'AuthInstructor')
+        console.log(categoryData);
+        // getQuiz(levelID, 'AuthInstructor')
     }, [])
 
 
@@ -138,8 +139,7 @@ function InstructorAddQuiz() {
             <div className='flex'>
                 <SidebarInstructor />
                 <div className='px-10 py-5 overflow-y-auto gap-8 h-[89.5vh] w-screen'>
-                    {quiz ?
-                        <>
+                    
                             <div className='flex justify-between'>
                                 <div className="flex gap-10">
                                     <div>
@@ -204,50 +204,8 @@ function InstructorAddQuiz() {
                                     </span>
                                 </div>
                             </form>
-                        </>
-                        :
-                        <div>
-                            <div className='flex justify-between'>
-                                <div className="flex gap-10">
-                                    <div>
-                                        <p className='text-slate-500 font-medium text-xs'>Quiz Category</p>
-                                        <div className='font-medium'>{quiz.categoryName}</div>
-                                    </div>
-                                    <div>
-                                        <p className='text-slate-500 font-medium text-xs'>Quiz Description</p>
-                                        <div className='font-medium'>{categoryData.description}</div>
-                                    </div>
-                                    <div>
-                                        <p className='text-slate-500 font-medium text-xs'>Level</p>
-                                        <div className='font-medium'>{quiz.levelName}</div>
-                                    </div>
-                                    <div>
-                                        <p className='text-slate-500 font-medium text-xs'>Level ID</p>
-                                        <div className='font-medium'>{quiz.level}</div>
-                                    </div>
-                                    <div>
-                                        <p className='text-slate-500 font-medium text-xs'>Total Questions</p>
-                                        <div className='font-medium'>{quiz.questions?.length}</div>
-                                    </div>
-                                    <div>
-                                        <p className='text-slate-500 font-medium text-xs'>Read Only Mode</p>
-                                        <div className='font-medium text-sm'>You cannot modify a quiz once published you have to delete the quiz.</div>
-                                    </div>
-                                </div>
-
-
-                                <button className='text-white flex my-auto gap-2 py-2 px-4 bg-red-500 hover:bg-red-700 rounded-md transition-all ease-in-out duration-200'>
-                                    <DeleteSweepIcon /> <div>Delete Quiz</div>
-                                </button>
-
-
-                            </div>
-
-                            <div>
-
-                            </div>
-                        </div>
-                    }
+                        
+                        
 
 
 
