@@ -9,6 +9,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CategoryContext from '../context/category/categoryContext';
 import notdatafound from "../assets/images/undraw_no_data_re_kwbl.svg"
 import { Link } from 'react-router-dom';
+import SERVER_URL from '../services/Helper';
 
 
 function UserReport(props) {
@@ -54,7 +55,7 @@ function Report() {
     const reportFetched = []
     const [report, setReport] = useState(reportFetched)
     const getUserReport = async (id) => {
-        const response = await fetch(`http://localhost:1000/api/userreport/fetch/${id}`, {
+        const response = await fetch(`${SERVER_URL}/api/userreport/fetch/${id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

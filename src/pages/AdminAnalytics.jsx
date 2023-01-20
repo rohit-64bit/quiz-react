@@ -3,6 +3,7 @@ import Header from '../components/Header'
 import SidebarAdmin from '../components/SidebarAdmin'
 import notdatafound from "../assets/images/undraw_no_data_re_kwbl.svg"
 import { Link } from 'react-router-dom'
+import SERVER_URL from '../services/Helper'
 
 
 function UserReport(props) {
@@ -49,7 +50,7 @@ function AdminAnalytics() {
     const reportFetched = []
     const [report, setReport] = useState(reportFetched)
     const getUserReport = async () => {
-        const response = await fetch(`http://localhost:1000/api/userreport/fetch/reports`, {
+        const response = await fetch(`${SERVER_URL}/api/userreport/fetch/reports`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

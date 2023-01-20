@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import cmpImg from "../assets/images/undraw_online_test_re_kyfx.svg"
 import Header from "../components/Header"
+import SERVER_URL from '../services/Helper'
 
 
 function Home() {
+
   return (
     <>
     <Header/>

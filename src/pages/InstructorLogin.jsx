@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header'
 import bglogin from '../assets/bg/bglogin.svg'
+import SERVER_URL from '../services/Helper';
 
 
 
@@ -19,7 +20,7 @@ function InstructorLogin() {
 
     const handleLogin = async (e) => {
         e.preventDefault()
-        const response = await fetch("http://localhost:1000/api/auth/instructor/authinstructor", {
+        const response = await fetch(`${SERVER_URL}/api/auth/instructor/authinstructor`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -5,6 +5,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { Input, MenuItem, TextField } from '@mui/material';
 import CategoryContext from '../context/category/categoryContext';
+import SERVER_URL from '../services/Helper';
 
 
 function Video(props) {
@@ -13,7 +14,7 @@ function Video(props) {
 
   const deleteVideo = async (id) => {
     // API Call
-    const response = await fetch(`http://localhost:1000/api/video/delete/${id}`, {
+    const response = await fetch(`${SERVER_URL}/api/video/delete/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -74,7 +75,7 @@ function InstructorLearn() {
   console.log(data);
 
   const handleAdd = async (e) => {
-    const response = await fetch("http://localhost:1000/api/video/create", {
+    const response = await fetch(`${SERVER_URL}/api/video/create`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

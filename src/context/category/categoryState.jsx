@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
+import SERVER_URL from '../../services/Helper'
 
 import CategoryContext from './categoryContext'
 
 const CategoryState = (props) => {
-    const host = "http://localhost:1000"
+    const host = SERVER_URL
 
     // multiple category fetched
 
@@ -203,7 +204,7 @@ const CategoryState = (props) => {
     }
 
     const deleteUser = async (id) => {
-        const response = await fetch(`http://localhost:1000/api/user/delete/${id}`, {
+        const response = await fetch(`${host}/api/user/delete/${id}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',

@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom"
 import bglogin from '../assets/bg/bglogin.svg'
 import Header from "../components/Header"
 import CategoryContext from '../context/category/categoryContext'
+import SERVER_URL from '../services/Helper'
 
 function Signin() {
 
@@ -21,7 +22,7 @@ function Signin() {
     const handleSignin = async (e) => {
         e.preventDefault();
         // console.log(credentials);
-        const response = await fetch("http://localhost:1000/api/auth/user/authuser", {
+        const response = await fetch(`${SERVER_URL}/api/auth/user/authuser`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

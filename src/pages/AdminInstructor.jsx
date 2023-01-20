@@ -7,6 +7,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import Header from "../components/Header"
 import CategoryContext from '../context/category/categoryContext';
 import CancelIcon from '@mui/icons-material/Cancel';
+import SERVER_URL from '../services/Helper';
 
 
 function Instructors(props) {
@@ -54,7 +55,7 @@ function Instructors(props) {
 
     const handleEditInstructor = async (instructorId) => {
         console.log(instructorId);
-        const response = await fetch(`http://localhost:1000/api/instructor/update/${instructorId}`, {
+        const response = await fetch(`${ SERVER_URL }/api/instructor/update/${instructorId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

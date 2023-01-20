@@ -4,6 +4,7 @@ import SidebarInstructor from '../components/SidebarInstructor'
 import notdatafound from "../assets/images/undraw_no_data_re_kwbl.svg"
 import { Link } from 'react-router-dom'
 import CategoryContext from '../context/category/categoryContext'
+import SERVER_URL from '../services/Helper'
 
 
 
@@ -54,7 +55,7 @@ function InstructorReport() {
     const reportFetched = []
     const [report, setReport] = useState(reportFetched)
     const getUserReport = async (id) => {
-        const response = await fetch(`http://localhost:1000/api/userreport/fetch/instructor/${id}`, {
+        const response = await fetch(`${SERVER_URL}/api/userreport/fetch/instructor/${id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

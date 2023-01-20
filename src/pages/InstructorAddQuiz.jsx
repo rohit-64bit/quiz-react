@@ -6,6 +6,7 @@ import Header from '../components/Header'
 import SidebarInstructor from '../components/SidebarInstructor'
 import CategoryContext from '../context/category/categoryContext'
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
+import SERVER_URL from '../services/Helper'
 
 
 
@@ -110,7 +111,7 @@ function InstructorAddQuiz() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(data);
-        const response = await fetch("http://localhost:1000/api/quiz/create", {
+        const response = await fetch(`${SERVER_URL}/api/quiz/create`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

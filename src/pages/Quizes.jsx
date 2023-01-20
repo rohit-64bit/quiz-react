@@ -27,7 +27,7 @@ function Quizes() {
                   {categories.name}
                 </div>
                 <div className='border-t-2'></div>
-                <div>{categories.description}</div>
+                <div>{categories.description.length > 60 ? categories.description.slice(0,60) + "..." : categories.description}</div>
               </Link>
             )
           })}

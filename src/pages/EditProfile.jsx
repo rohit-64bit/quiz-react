@@ -5,6 +5,7 @@ import React, { useContext, useEffect } from 'react'
 import { useState } from 'react';
 import Header from "../components/Header"
 import CategoryContext from '../context/category/categoryContext';
+import SERVER_URL from '../services/Helper';
 
 
 function EditProfile() {
@@ -40,7 +41,7 @@ function EditProfile() {
   // Edit a Note
   const editProfile = async (id) => {
     // API Call 
-    const response = await fetch(`http://localhost:1000/api/auth/user/update/${id}`, {
+    const response = await fetch(`${SERVER_URL}/api/auth/user/update/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

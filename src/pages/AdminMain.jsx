@@ -7,6 +7,7 @@ import Header from "../components/Header"
 import { Category } from '@mui/icons-material';
 import CategoryContext from '../context/category/categoryContext';
 import { useContext } from 'react';
+import SERVER_URL from '../services/Helper';
 
 
 
@@ -45,7 +46,7 @@ function CategoryView(props) {
   // Edit a Note
   const editCategory = async (id) => {
     // API Call 
-    const response = await fetch(`http://localhost:1000/api/category/update/${id}`, {
+    const response = await fetch(`${SERVER_URL}/api/category/update/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -106,7 +107,7 @@ function AdminMain() {
   })
 
   const handleSubmit = async (e) => {
-    const response = await fetch("http://localhost:1000/api/category/create", {
+    const response = await fetch(`${SERVER_URL}/api/category/create`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -2,6 +2,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import React, { useContext, useEffect } from 'react'
 import Header from "../components/Header"
 import CategoryContext from '../context/category/categoryContext';
+import SERVER_URL from '../services/Helper';
 
 
 function ScoreCard(props) {
@@ -16,7 +17,7 @@ function ScoreCard(props) {
 
 
   const handleReportSubmit = async (id) => {
-    const response = await fetch(`http://localhost:1000/api/userreport/create`, {
+    const response = await fetch(`${SERVER_URL}/api/userreport/create`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -37,7 +38,7 @@ function ScoreCard(props) {
 
   useEffect(() => {
     getUserProfile("userToken");
-    console.log(user);
+    // console.log(user);
   }, [])
 
   // console.log(user);

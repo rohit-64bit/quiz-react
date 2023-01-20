@@ -18,6 +18,7 @@ function Header(props) {
         setAnchorEl(event.currentTarget);
     };
 
+    
 
     // getting user details
 
@@ -25,7 +26,7 @@ function Header(props) {
     const { getUserProfile, user, notification, setNotification } = context;
 
     useEffect(() => {
-        getUserProfile("userToken")
+        getUserProfile("userToken");
     }, [])
 
 
@@ -44,7 +45,7 @@ function Header(props) {
         <>
 
             <div className='flex p-5 justify-between bg-slate-100 outline outline-1 outline-slate-300 '>
-                <Link to="/" className='font-bold flex text-xl my-auto'>TAKE YOUR QUIZ <p className='ml-2 text-blue-600  text-base my-auto'>{props.details}</p></Link>
+                <Link to="/" className='font-bold flex text-xl my-auto'>TAKE YOUR QUIZ<p className='ml-2 text-blue-600  text-base my-auto'>{props.details}</p></Link>
                 {localStorage.getItem('adminToken') || localStorage.getItem('AuthInstructor') != null ? <div></div> : <div className='flex gap-10 my-auto'>
 
                     {!localStorage.getItem('userToken') ?

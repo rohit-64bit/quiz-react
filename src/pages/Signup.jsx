@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import bgsignup from '../assets/bg/bgsignup.svg'
 import Header from "../components/Header"
 import CategoryContext from '../context/category/categoryContext'
+import SERVER_URL from '../services/Helper'
 
 
 function Signup() {
@@ -23,7 +24,7 @@ function Signup() {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:1000/api/auth/user/createuser", {
+    const response = await fetch(`${SERVER_URL}/api/auth/user/createuser`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

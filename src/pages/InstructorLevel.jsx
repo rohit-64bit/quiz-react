@@ -5,6 +5,7 @@ import Header from '../components/Header'
 import SidebarInstructor from '../components/SidebarInstructor'
 import CategoryContext from '../context/category/categoryContext'
 import DeleteIcon from '@mui/icons-material/Delete';
+import SERVER_URL from '../services/Helper'
 
 function Level(props) {
 
@@ -21,7 +22,7 @@ function Level(props) {
 
     const deleteLevel = async (id) => {
         // API Call
-        const response = await fetch(`http://localhost:1000/api/level/delete/${id}`, {
+        const response = await fetch(`${SERVER_URL}/api/level/delete/${id}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -101,7 +102,7 @@ function InstructorLevel() {
     // console.log(instructor.categoryAssinged);
 
     const handleSubmit = async (e) => {
-        const response = await fetch('http://localhost:1000/api/level/create', {
+        const response = await fetch(`${SERVER_URL}/api/level/create`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
